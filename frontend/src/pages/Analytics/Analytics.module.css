@@ -215,7 +215,7 @@
     width: 100%;
   }
 
-  .barChartContainer, 
+  .barChartContainer,
   .doughnutContainer {
     height: 250px;
   }
@@ -230,7 +230,7 @@
     height: 200px;
   }
 
-  .barChartContainer, 
+  .barChartContainer,
   .doughnutContainer {
     height: 200px;
   }
@@ -245,5 +245,65 @@
 
   .siteStat {
     padding: 5px 0;
+  }
+}
+
+/* Add these styles to your existing CSS file */
+
+.dateControls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.refreshButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.refreshButton:hover {
+  background-color: #16a34a;
+}
+
+.refreshButton svg {
+  transition: transform 0.3s ease;
+}
+
+.refreshButton:hover svg {
+  transform: rotate(180deg);
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 50vh;
+  text-align: center;
+  color: #ef4444;
+  font-size: 1.1rem;
+}
+
+/* Make sure the analytics page is responsive */
+@media (max-width: 768px) {
+  .container {
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .dateControls {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
   }
 }

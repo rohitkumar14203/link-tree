@@ -223,9 +223,7 @@
 
 .selectedLayout .layoutIcon {
   border-color: #4caf50;
-}
-/* Add these styles to your existing CSS file */
-
+}/* Add these styles to your existing CSS file */
 .buttonsSection {
   background-color: white;
   border-radius: 8px;
@@ -233,19 +231,16 @@
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
 .buttonStylesContainer {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
-
 .buttonStyles {
   display: flex;
   gap: 1rem;
   margin-top: 0.5rem;
 }
-
 /* Fill button styles */
 .fillButtonRect, .fillButtonRounded, .fillButtonPill {
   width: 112px;
@@ -254,19 +249,15 @@
   border: none;
   cursor: pointer;
 }
-
 .fillButtonRect {
   border-radius: 0;
 }
-
 .fillButtonRounded {
   border-radius: 8px;
 }
-
 .fillButtonPill {
   border-radius: 20px;
 }
-
 /* Outline button styles */
 .outlineButtonRect, .outlineButtonRounded, .outlineButtonPill {
   width: 112px;
@@ -275,19 +266,15 @@
   border: 1px solid #000;
   cursor: pointer;
 }
-
 .outlineButtonRect {
   border-radius: 0;
 }
-
 .outlineButtonRounded {
   border-radius: 8px;
 }
-
 .outlineButtonPill {
   border-radius: 20px;
 }
-
 /* Hard shadow button styles */
 .hardShadowButtonRect, .hardShadowButtonRounded, .hardShadowButtonPill {
   width: 112px;
@@ -298,19 +285,15 @@
   cursor: pointer;
   position: relative;
 }
-
 .hardShadowButtonRect {
   border-radius: 0;
 }
-
 .hardShadowButtonRounded {
   border-radius: 8px;
 }
-
 .hardShadowButtonPill {
   border-radius: 20px;
 }
-
 /* Soft shadow button styles */
 .softShadowButtonRect, .softShadowButtonRounded, .softShadowButtonPill {
   width: 112px;
@@ -320,19 +303,15 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-
 .softShadowButtonRect {
   border-radius: 0;
 }
-
 .softShadowButtonRounded {
   border-radius: 8px;
 }
-
 .softShadowButtonPill {
   border-radius: 20px;
-}
-/* Special button styles based on the image */
+}/* Special button styles based on the image */
 .specialButtonScalloped {
   width: 112px;
   height: 40px;
@@ -342,7 +321,6 @@
   clip-path: polygon(0% 10%, 10% 0%, 20% 10%, 30% 0%, 40% 10%, 50% 0%, 60% 10%, 70% 0%, 80% 10%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 80% 90%, 70% 100%, 60% 90%, 50% 100%, 40% 90%, 30% 100%, 20% 90%, 10% 100%, 0% 90%);
   cursor: pointer;
 }
-
 .specialButtonWavy {
   width: 112px;
   height: 40px;
@@ -352,7 +330,6 @@
   clip-path: polygon(0% 10%, 10% 0%, 20% 10%, 30% 0%, 40% 10%, 50% 0%, 60% 10%, 70% 0%, 80% 10%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 80% 90%, 70% 100%, 60% 90%, 50% 100%, 40% 90%, 30% 100%, 20% 90%, 10% 100%, 0% 90%);
   cursor: pointer;
 }
-
 .specialButtonFramed {
   width: 112px;
   height: 40px;
@@ -362,7 +339,6 @@
   outline-offset: 3px;
   cursor: pointer;
 }
-
 .specialButtonRounded {
   width: 112px;
   height: 40px;
@@ -371,7 +347,6 @@
   border-radius: 50px;
   cursor: pointer;
 }
-
 .specialButtonFrameless {
   width: 112px;
   height: 40px;
@@ -379,7 +354,6 @@
   border: 1px dashed #000;
   cursor: pointer;
 }
-
 .specialButtonShadowed {
   width: 112px;
   height: 40px;
@@ -389,15 +363,12 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
-
 .selectedButton {
   outline: 2px solid #22c55e;
   outline-offset: 2px;
-}
-.colorSection {
+}.colorSection {
   margin-top: 1.5rem;
 }
-
 .colorPicker {
   display: flex;
   align-items: center;
@@ -405,7 +376,6 @@
   margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
-
 .colorPreview {
   width: 40px;
   height: 40px;
@@ -413,27 +383,22 @@
   border: 1px solid #e5e7eb;
   cursor: pointer;
 }
-
 .colorValue {
   display: flex;
   flex-direction: column;
 }
-
 .colorValue span:first-child {
   font-size: 0.875rem;
   color: #6b7280;
 }
-
 .colorValue span:last-child {
   font-weight: 500;
-}
-/* Font Section */
+}/* Font Section */
 .fontSelector {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-
 .fontDropdown {
   display: flex;
   align-items: center;
@@ -443,91 +408,139 @@
   border-radius: 5px;
   cursor: pointer;
 }
-
 .fontIcon {
   font-size: 18px;
   color: #000;
 }
-
 .fontName {
   font-size: 14px;
   color: #000;
 }
-
 /* Theme Options */
 .themeOptions {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
-
 .themeOption {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+}/* Theme section styles */
+.themesSection {
+  margin-bottom: 30px;
+}
+
+.themeGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.themeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.themeCard {
+  width: 100px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.themeCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .themePreview {
   width: 100%;
-  height: 120px;
-  border: 1px solid #eee;
-  border-radius: 5px;
+  height: 180px;
+  border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  position: relative;
 }
 
-.airSnowTheme,
-.airGreyTheme,
-.airSmokeTheme,
-.airBlackTheme,
-.mineralBlueTheme,
-.mineralGreenTheme,
-.mineralOrangeTheme {
+.previewContent {
   width: 100%;
   height: 100%;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
 }
 
-.airSnowTheme {
-  background-color: #fff;
+.previewButtons {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.airGreyTheme {
-  background-color: #f5f5f5;
+.previewButton {
+  width: 100%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
 }
 
-.airSmokeTheme {
-  background-color: #333;
-}
-
-.airBlackTheme {
-  background-color: #000;
-}
-
-.mineralBlueTheme {
-  background-color: #e6f7ff;
-}
-
-.mineralGreenTheme {
-  background-color: #e6fff0;
-}
-
-.mineralOrangeTheme {
-  background-color: #fff7e6;
-}
-
-.themeOption span {
+.themeName {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
   font-size: 14px;
-  color: #000;
+  color: #333;
 }
 
 .selectedTheme .themePreview {
-  border-color: #4caf50;
+  border: 2px solid #4CAF50;
 }
 
+.selectedTheme .themeName {
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+/* Add a checkmark for selected theme */
+.selectedTheme .themePreview::after {
+  content: "✓";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .themeRow {
+    justify-content: center;
+  }
+  
+  .themeCard {
+    width: 90px;
+  }
+  
+  .themePreview {
+    height: 160px;
+  }
+}
 /* Save Button */
 .saveButtonContainer {
   display: flex;

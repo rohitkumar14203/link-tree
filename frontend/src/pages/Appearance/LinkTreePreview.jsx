@@ -275,21 +275,65 @@ const LinkTreePreview = ({ previewData, isPreview }) => {
           </div>
         ) : (
           <div
-            className={styles.linksContainer}
-            style={{
-              display: appearance?.layout === "grid" ? "grid" : "flex",
-              flexDirection: appearance?.layout === "grid" ? "unset" : "column",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "10px",
-            }}
+            className={styles.linksScrollContainer}
           >
-            {activeTab === "link" ? (
-              links && links.length > 0 ? (
-                links.map((link, index) => (
+            <div
+              className={styles.linksContainer}
+              style={{
+                display: appearance?.layout === "grid" ? "grid" : "flex",
+                flexDirection: appearance?.layout === "grid" ? "unset" : "column",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "10px",
+              }}
+            >
+              {activeTab === "link" ? (
+                links && links.length > 0 ? (
+                  links.map((link, index) => (
+                    <a
+                      key={index}
+                      href={isPreview ? "#" : link.url}
+                      className={styles.linkButton}
+                      style={{
+                        backgroundColor: appearance?.buttonColor || "#111111",
+                        color: appearance?.buttonFontColor || "#888888",
+                        borderRadius: "30px",
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "10px 15px",
+                        border:
+                          appearance?.buttonStyle === "outline"
+                            ? `2px solid ${appearance?.buttonColor || "#111111"}`
+                            : "none",
+                        boxShadow:
+                          appearance?.buttonStyle === "hardShadow"
+                            ? "4px 4px 0 rgba(0,0,0,0.2)"
+                            : appearance?.buttonStyle === "softShadow"
+                            ? "0 4px 8px rgba(0,0,0,0.1)"
+                            : "none",
+                        fontFamily: appearance?.font || "DM Sans",
+                      }}
+                    >
+                      {link.app && (
+                        <div className={styles.appIconContainer}>
+                          <img
+                            src={getAppIcon(link.app)}
+                            alt={link.app}
+                            className={styles.appIcon}
+                          />
+                        </div>
+                      )}
+                      <span className={styles.linkTitle}>{link.title}</span>
+                    </a>
+                  ))
+                ) : (
+                  <p className={styles.emptyMessage}>No links available</p>
+                )
+              ) : shopLinks && shopLinks.length > 0 ? (
+                shopLinks.map((item, index) => (
                   <a
                     key={index}
-                    href={isPreview ? "#" : link.url}
-                    className={styles.linkButton}
+                    href={isPreview ? "#" : item.url}
+                    className={styles.shopButton}
                     style={{
                       backgroundColor: appearance?.buttonColor || "#111111",
                       color: appearance?.buttonFontColor || "#888888",
@@ -310,55 +354,15 @@ const LinkTreePreview = ({ previewData, isPreview }) => {
                       fontFamily: appearance?.font || "DM Sans",
                     }}
                   >
-                    {link.app && (
-                      <div className={styles.appIconContainer}>
-                        <img
-                          src={getAppIcon(link.app)}
-                          alt={link.app}
-                          className={styles.appIcon}
-                        />
-                      </div>
-                    )}
-                    <span className={styles.linkTitle}>{link.title}</span>
+                    <span className={styles.shopItemTitle}>
+                      {item.title || ""}
+                    </span>
                   </a>
                 ))
               ) : (
-                <p className={styles.emptyMessage}>No links available</p>
-              )
-            ) : shopLinks && shopLinks.length > 0 ? (
-              shopLinks.map((item, index) => (
-                <a
-                  key={index}
-                  href={isPreview ? "#" : item.url}
-                  className={styles.shopButton}
-                  style={{
-                    backgroundColor: appearance?.buttonColor || "#111111",
-                    color: appearance?.buttonFontColor || "#888888",
-                    borderRadius: "30px",
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "10px 15px",
-                    border:
-                      appearance?.buttonStyle === "outline"
-                        ? `2px solid ${appearance?.buttonColor || "#111111"}`
-                        : "none",
-                    boxShadow:
-                      appearance?.buttonStyle === "hardShadow"
-                        ? "4px 4px 0 rgba(0,0,0,0.2)"
-                        : appearance?.buttonStyle === "softShadow"
-                        ? "0 4px 8px rgba(0,0,0,0.1)"
-                        : "none",
-                    fontFamily: appearance?.font || "DM Sans",
-                  }}
-                >
-                  <span className={styles.shopItemTitle}>
-                    {item.title || ""}
-                  </span>
-                </a>
-              ))
-            ) : (
-              <p className={styles.emptyMessage}>No shop items available</p>
-            )}
+                <p className={styles.emptyMessage}>No shop items available</p>
+              )}
+            </div>
           </div>
         )}
       </div>

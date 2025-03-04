@@ -502,83 +502,137 @@ const Appearance = () => {
           {/* Themes Section */}
           <section className={styles.themesSection}>
             <h2>Themes</h2>
-            <div className={styles.themeOptions}>
-              <div
-                className={`${styles.themeOption} ${
-                  theme === "air-snow" ? styles.selectedTheme : ""
-                }`}
-                onClick={() => setTheme("air-snow")}
-              >
-                <div className={styles.themePreview}>
-                  <div className={styles.airSnowTheme}></div>
+            <div className={styles.themeGrid}>
+              {/* Air Themes Row */}
+              <div className={styles.themeRow}>
+                <div
+                  className={`${styles.themeCard} ${
+                    theme === "air-snow" ? styles.selectedTheme : ""
+                  }`}
+                  onClick={() => setTheme("air-snow")}
+                >
+                  <div className={styles.themePreview}>
+                    <div className={styles.previewContent}>
+                      <div className={styles.previewButtons}>
+                        <div className={styles.previewButton}></div>
+                        <div className={styles.previewButton}></div>
+                        <div className={styles.previewButton}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.themeName}>Air Snow</span>
                 </div>
-                <span>Air Snow</span>
+                
+                <div
+                  className={`${styles.themeCard} ${
+                    theme === "air-grey" ? styles.selectedTheme : ""
+                  }`}
+                  onClick={() => setTheme("air-grey")}
+                >
+                  <div className={styles.themePreview}>
+                    <div className={styles.previewContent} style={{ backgroundColor: "#e9ecef" }}>
+                      <div className={styles.previewButtons}>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#fff" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#fff" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#fff" }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.themeName}>Air Grey</span>
+                </div>
+                
+                <div
+                  className={`${styles.themeCard} ${
+                    theme === "air-smoke" ? styles.selectedTheme : ""
+                  }`}
+                  onClick={() => setTheme("air-smoke")}
+                >
+                  <div className={styles.themePreview}>
+                    <div className={styles.previewContent} style={{ backgroundColor: "#343a40" }}>
+                      <div className={styles.previewButtons}>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#fff" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#fff" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#fff" }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.themeName}>Air Smoke</span>
+                </div>
+                
+                <div
+                  className={`${styles.themeCard} ${
+                    theme === "air-black" ? styles.selectedTheme : ""
+                  }`}
+                  onClick={() => setTheme("air-black")}
+                >
+                  <div className={styles.themePreview}>
+                    <div className={styles.previewContent} style={{ backgroundColor: "#000" }}>
+                      <div className={styles.previewButtons}>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#333" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#333" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#333" }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.themeName}>Air Black</span>
+                </div>
               </div>
-              <div
-                className={`${styles.themeOption} ${
-                  theme === "air-grey" ? styles.selectedTheme : ""
-                }`}
-                onClick={() => setTheme("air-grey")}
-              >
-                <div className={styles.themePreview}>
-                  <div className={styles.airGreyTheme}></div>
+              
+              {/* Mineral Themes Row */}
+              <div className={styles.themeRow}>
+                <div
+                  className={`${styles.themeCard} ${
+                    theme === "mineral-blue" ? styles.selectedTheme : ""
+                  }`}
+                  onClick={() => setTheme("mineral-blue")}
+                >
+                  <div className={styles.themePreview}>
+                    <div className={styles.previewContent} style={{ backgroundColor: "#E6F4F1" }}>
+                      <div className={styles.previewButtons}>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#b2ebf2", border: "1px solid #b2ebf2" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#b2ebf2", border: "1px solid #b2ebf2" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#b2ebf2", border: "1px solid #b2ebf2" }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.themeName}>Mineral Blue</span>
                 </div>
-                <span>Air Grey</span>
-              </div>
-              <div
-                className={`${styles.themeOption} ${
-                  theme === "air-smoke" ? styles.selectedTheme : ""
-                }`}
-                onClick={() => setTheme("air-smoke")}
-              >
-                <div className={styles.themePreview}>
-                  <div className={styles.airSmokeTheme}></div>
+                
+                <div
+                  className={`${styles.themeCard} ${
+                    theme === "mineral-green" ? styles.selectedTheme : ""
+                  }`}
+                  onClick={() => setTheme("mineral-green")}
+                >
+                  <div className={styles.themePreview}>
+                    <div className={styles.previewContent} style={{ backgroundColor: "#E6F4EC" }}>
+                      <div className={styles.previewButtons}>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#c8e6c9", border: "1px solid #c8e6c9" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#c8e6c9", border: "1px solid #c8e6c9" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#c8e6c9", border: "1px solid #c8e6c9" }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.themeName}>Mineral Green</span>
                 </div>
-                <span>Air Smoke</span>
-              </div>
-              <div
-                className={`${styles.themeOption} ${
-                  theme === "air-black" ? styles.selectedTheme : ""
-                }`}
-                onClick={() => setTheme("air-black")}
-              >
-                <div className={styles.themePreview}>
-                  <div className={styles.airBlackTheme}></div>
+                
+                <div
+                  className={`${styles.themeCard} ${
+                    theme === "mineral-orange" ? styles.selectedTheme : ""
+                  }`}
+                  onClick={() => setTheme("mineral-orange")}
+                >
+                  <div className={styles.themePreview}>
+                    <div className={styles.previewContent} style={{ backgroundColor: "#F9EFE8" }}>
+                      <div className={styles.previewButtons}>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#ffe0b2", border: "1px solid #ffe0b2" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#ffe0b2", border: "1px solid #ffe0b2" }}></div>
+                        <div className={styles.previewButton} style={{ backgroundColor: "#ffe0b2", border: "1px solid #ffe0b2" }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className={styles.themeName}>Mineral Orange</span>
                 </div>
-                <span>Air Black</span>
-              </div>
-              <div
-                className={`${styles.themeOption} ${
-                  theme === "mineral-blue" ? styles.selectedTheme : ""
-                }`}
-                onClick={() => setTheme("mineral-blue")}
-              >
-                <div className={styles.themePreview}>
-                  <div className={styles.mineralBlueTheme}></div>
-                </div>
-                <span>Mineral Blue</span>
-              </div>
-              <div
-                className={`${styles.themeOption} ${
-                  theme === "mineral-green" ? styles.selectedTheme : ""
-                }`}
-                onClick={() => setTheme("mineral-green")}
-              >
-                <div className={styles.themePreview}>
-                  <div className={styles.mineralGreenTheme}></div>
-                </div>
-                <span>Mineral Green</span>
-              </div>
-              <div
-                className={`${styles.themeOption} ${
-                  theme === "mineral-orange" ? styles.selectedTheme : ""
-                }`}
-                onClick={() => setTheme("mineral-orange")}
-              >
-                <div className={styles.themePreview}>
-                  <div className={styles.mineralOrangeTheme}></div>
-                </div>
-                <span>Mineral Orange</span>
               </div>
             </div>
           </section>

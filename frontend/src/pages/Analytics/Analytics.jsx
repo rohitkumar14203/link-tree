@@ -36,89 +36,61 @@ const Analytics = () => {
   const [analytics, setAnalytics] = useState(null);
   const [dateRange, setDateRange] = useState('Feb 8th to Feb 15th');
   const [error, setError] = useState('');
+  const [refreshInterval, setRefreshInterval] = useState(null);
 
-  useEffect(() => {
-    const fetchAnalytics = async () => {
-      if (!user) return;
-  
-      try {
-        setLoading(true);
-        console.log('Fetching analytics data...');
-        
-        // Common headers for all requests
-        const headers = {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`,
-          'Cache-Control': 'no-cache',
-          'Accept': 'application/json'
-        };
-        
-        // Try the debug endpoint first
-        try {
-          const debugResponse = await axios.get(`${API_URL}/analytics/debug`, {
-            headers,
-            withCredentials: true
-          });
-          console.log('Debug endpoint response:', debugResponse.data);
-        } catch (debugError) {
-          console.log('Debug endpoint error:', debugError.message);
-        }
-        
-        // Make the actual analytics request
-        const response = await axios.get(`${API_URL}/analytics`, {
-          headers,
-          withCredentials: true,
-          timeout: 10000
-        });
-  
-        if (response.data) {
-          console.log('Analytics data received:', response.data);
-          setAnalytics(response.data);
-          setError('');
-        } else {
-          throw new Error('No data received from API');
-        }
-      } catch (error) {
-        console.error('Error fetching analytics:', error);
-        
-        // Provide fallback data for development/testing
-        if (process.env.NODE_ENV !== 'production') {
-          console.log('Using fallback analytics data');
-          setAnalytics({
-            overview: {
-              linkClicks: 120,
-              shopClicks: 45,
-              ctaClicks: 25
-            },
-            monthlyData: {
-              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-              data: [10, 15, 8, 12, 18, 20, 15]
-            },
-            deviceData: {
-              labels: ['Linux', 'Mac', 'iOS', 'Windows', 'Android', 'Other'],
-              data: [10, 20, 15, 30, 15, 10]
-            },
-            siteData: {
-              labels: ['Youtube', 'Facebook', 'Instagram', 'Other'],
-              data: [45, 25, 20, 10]
-            },
-            linkData: {
-              labels: ['Link 1', 'Link 2', 'Link 3', 'Link 4', 'Link 5', 'Link 6'],
-              data: [12, 19, 8, 15, 7, 11]
-            }
-          });
-        } else {
-          const errorMessage = error.response 
-            ? `Server error: ${error.response.status} - ${error.response.data?.message || 'Unknown error'}`
-            : `Network error: ${error.message}`;
-          setError(`Failed to load analytics data: ${errorMessage}`);
-        }
-      } finally {
-        setLoading(false);
+  // Function to fetch analytics data
+  const fetchAnalytics = async () => {
+    if (!user) return;
+
+    try {
+      console.log('Fetching analytics data...');
+      
+      // Common headers for all requests
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`,
+        'Cache-Control': 'no-cache',
+        'Accept': 'application/json'
+      };
+      
+      // Make the actual analytics request
+      const response = await axios.get(`${API_URL}/analytics`, {
+        headers,
+        withCredentials: true,
+        timeout: 10000
+      });
+
+      if (response.data) {
+        console.log('Analytics data received:', response.data);
+        setAnalytics(response.data);
+        setError('');
+      } else {
+        throw new Error('No data received from API');
       }
-    };
-  
+    } catch (error) {
+      console.error('Error fetching analytics:', error);
+      
+      // Provide more detailed error message
+      const errorMessage = error.response 
+        ? `Server error: ${error.response.status} - ${error.response.data?.message || 'Unknown error'}`
+        : `Network error: ${error.message}`;
+      setError(`Failed to load analytics data: ${errorMessage}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial fetch on component mount
+  useEffect(() => {
     fetchAnalytics();
+    
+    // Set up polling for real-time updates
+    const interval = setInterval(fetchAnalytics, 30000); // Poll every 30 seconds
+    setRefreshInterval(interval);
+    
+    return () => {
+      if (refreshInterval) clearInterval(refreshInterval);
+    };
   }, [user]);
 
   // Line chart options and data
@@ -224,7 +196,9 @@ const Analytics = () => {
           color: '#888',
           font: {
             size: 10
-          }
+          },
+          maxRotation: 45,
+          minRotation: 45
         }
       }
     },
@@ -291,16 +265,36 @@ const Analytics = () => {
     ],
   } : null;
 
+  // Add refresh button handler
+  const handleRefresh = () => {
+    setLoading(true);
+    fetchAnalytics();
+  };
+
   if (loading) {
     return <div className={styles.loading}>Loading analytics...</div>;
   }
 
   if (error) {
-    return <div className={styles.error}>{error}</div>;
+    return (
+      <div className={styles.error}>
+        {error}
+        <button className={styles.refreshButton} onClick={handleRefresh}>
+          Try Again
+        </button>
+      </div>
+    );
   }
 
   if (!analytics) {
-    return <div className={styles.error}>No analytics data available</div>;
+    return (
+      <div className={styles.error}>
+        No analytics data available
+        <button className={styles.refreshButton} onClick={handleRefresh}>
+          Refresh
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -308,14 +302,23 @@ const Analytics = () => {
       <div className={styles.header}>
         <div>
           <h1>Hi, {user?.firstName || 'User'}!</h1>
-          <p>Congratulations. You got a great response today.</p>
+          <p>Here's your latest analytics data</p>
         </div>
-        <div className={styles.dateSelector}>
-          <span>{dateRange}</span>
-          <button className={styles.dateButton}>
+        <div className={styles.dateControls}>
+          <div className={styles.dateSelector}>
+            <span>{dateRange}</span>
+            <button className={styles.dateButton}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+              </svg>
+            </button>
+          </div>
+          <button className={styles.refreshButton} onClick={handleRefresh}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+              <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+              <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
             </svg>
+            Refresh
           </button>
         </div>
       </div>

@@ -22,9 +22,21 @@ import youtube from "../../assets/Home_Images/youtube.png";
 import tiktok from "../../assets/Home_Images/tiktok.png";
 import fire from "../../assets/Home_Images/fire.png";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const LandingPage = () => {
-  //   const navigate = useNavigate();
+  // Add state to track screen size
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Update state when window is resized
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="linktree-page">
@@ -48,10 +60,12 @@ const LandingPage = () => {
           <div className="hero-text">
             <h1>The easiest place to update and share your Connection</h1>
             <p className="hero-description">
-              Help your followers discover everything you’re sharing all over
-              the internet, in one simple place. They’ll thank you for it!
+              Help your followers discover everything you're sharing all over
+              the internet, in one simple place. They'll thank you for it!
             </p>
-            <button className="get-started-button">Get Started</button>
+            <Link to="/signup">
+              <button className="get-started-button">Get Started</button>
+            </Link>
           </div>
           <div className="hero-image">
             <img
@@ -67,13 +81,13 @@ const LandingPage = () => {
             <h2>Share limitless content in limitless ways</h2>
             <p>
               Connect your content in all its forms and help followers find more
-              of what they’re looking for. Your TikToks, Tweets, YouTube videos,
+              of what they're looking for. Your TikToks, Tweets, YouTube videos,
               music, articles, recipes, podcasts and more… It all comes together
               in one powerful place
             </p>
           </div>
           <div className="image-container">
-            <img src={all} alt="" />
+            <img src={all} alt="Content sharing examples" />
           </div>
         </section>
 
@@ -94,8 +108,7 @@ const LandingPage = () => {
               </div>
               <div className="right-content">
                 <p>
-                  [short description goes in here] lorem ipsum is a placeholder
-                  text to demonstrate.
+                  "SPARK has transformed how I connect with my audience. Now all my content is in one place, making it easier for my followers to find everything!"
                 </p>
               </div>
             </div>
@@ -224,7 +237,6 @@ const LandingPage = () => {
               </Link>
             </div>
             <div>
-              {" "}
               <Link to="/signup" className="sign-in-button">
                 Sign up free
               </Link>
@@ -273,19 +285,19 @@ const LandingPage = () => {
 
           <div className="icons">
             <div>
-              <img src={twitter} alt="" />
+              <img src={twitter} alt="Twitter" />
             </div>
             <div>
-              <img src={insta} alt="" />
+              <img src={insta} alt="Instagram" />
             </div>
             <div>
-              <img src={youtube} alt="" />
+              <img src={youtube} alt="YouTube" />
             </div>
             <div>
-              <img src={tiktok} alt="" />
+              <img src={tiktok} alt="TikTok" />
             </div>
             <div>
-              <img src={fire} alt="" />
+              <img src={fire} alt="Fire" />
             </div>
           </div>
         </div>

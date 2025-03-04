@@ -584,27 +584,66 @@ a {
   align-items: center;
 }
 
-/* Add these media queries at the end of your existing CSS */
+/* ... existing styles ... */
 
+/* Improved responsive styles */
 @media screen and (max-width: 768px) {
+  .linktree-page {
+    margin: 10px;
+  }
+
   .header {
     padding: 15px;
     flex-direction: column;
     gap: 15px;
+    margin-top: 20px;
+    border-radius: 25px;
   }
 
   .logo-container {
     justify-content: center;
   }
 
+  .logo-text, .line, .market {
+    font-size: 20px;
+  }
+
+  .sign-in-button {
+    width: 100%;
+    max-width: 200px;
+    height: 50px;
+    margin-top: 10px;
+  }
+
   .hero-section {
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 0;
     text-align: center;
   }
 
   .hero-text {
     width: 100%;
+    padding-right: 0;
+  }
+
+  .hero-text h1 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .hero-description {
+    max-width: 100%;
+  }
+
+  .get-started-button {
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto;
   }
 
   .hero-image {
@@ -619,7 +658,7 @@ a {
 
   .share {
     flex-direction: column;
-    padding: 20px;
+    padding: 0;
   }
 
   .share-content {
@@ -627,65 +666,161 @@ a {
     text-align: center;
   }
 
+  .share-content h2 {
+    font-size: 28px;
+    line-height: 36px;
+    margin-top: 40px;
+  }
+
+  .share-content p {
+    font-size: 14px;
+    line-height: 24px;
+  }
+
   .image-container {
     width: 100%;
+    height: auto;
     margin-top: 20px;
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    height: auto;
   }
 
   .customer-container {
     flex-direction: column;
-    padding: 20px;
+    padding: 0;
   }
 
-  .customer-left, 
+  .customer-left {
+    width: 100%;
+    text-align: center;
+  }
+
+  .customer-left h2 {
+    width: 100%;
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .read-btn {
+    margin: 20px auto;
+  }
+
   .customer-right {
     width: 100%;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .customer-right p {
+    width: 100%;
+    margin-top: 10px;
   }
 
   .card-section {
-    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
   }
 
-  .card-one, 
-  .card-two {
+  .card-one, .card-two {
     flex-direction: column;
     gap: 20px;
   }
 
-  .card-one > div, 
-  .card-two > div {
+  .card-one > div, .card-two > div {
     width: 100%;
   }
 
-  .integration-section {
-    padding: 20px;
+  .card-one img, .card-two img {
+    width: 100%;
+    height: auto;
   }
 
-  .int-one, 
-  .int-two, 
-  .int-three {
-    flex-direction: column;
+  .integration-section {
+    padding: 0;
+  }
+
+  .int-text {
+    font-size: 28px;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  .int-one, .int-two, .int-three {
+    grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  .footer {
+    margin-top: 40px;
+    padding: 30px 20px;
+    border-radius: 16px;
   }
 
   .footer-container {
     flex-direction: column;
-    padding: 20px;
+    gap: 30px;
+  }
+
+  .footer-left-buttons {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .login-btn, .sign-up {
+    width: 100%;
+    max-width: 200px;
   }
 
   .footer-right {
     flex-direction: column;
     gap: 30px;
+    text-align: center;
+  }
+
+  .footer-column {
+    gap: 15px;
   }
 
   .acknowledge {
     flex-direction: column;
     text-align: center;
-    padding: 20px;
+  }
+
+  .ack-text {
+    width: 100%;
+    margin: 20px 0;
   }
 
   .icons {
     justify-content: center;
-    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+/* Additional styles for very small devices */
+@media screen and (max-width: 480px) {
+  .hero-text h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .share-content h2, .customer-left h2, .int-text {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .logo-text, .line, .market {
+    font-size: 18px;
   }
 }
