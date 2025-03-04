@@ -55,6 +55,37 @@ const Link = () => {
   const [isToggleEnabled, setIsToggleEnabled] = useState(false);
   // Add a new state to track selected application
   const [selectedApp, setSelectedApp] = useState(null);
+  // Handle image upload
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${API_URL}/links/upload-image`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.data.profileImage) {
+        setProfileImage(getProfileImageUrl(response.data.profileImage));
+        setMessage("Image uploaded successfully!");
+      }
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Error uploading image");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchLinkProfile = async () => {
@@ -105,42 +136,6 @@ const Link = () => {
     }
   }, [currentUser]);
 
-  // Handle image upload
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        `${API_URL}/links/upload-image`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (response.data.profileImage) {
-        setProfileImage(getProfileImageUrl(response.data.profileImage));
-        setMessage("Image uploaded successfully!");
-        // Refresh the link profile data
-        fetchLinkProfile();
-      }
-    } catch (error) {
-      console.error("Upload error:", error);
-      setMessage(error.response?.data?.message || "Error uploading image");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // ... rest of the component code ...
   // Handle remove image
   const handleRemoveImage = () => {
     setProfileImage(user);

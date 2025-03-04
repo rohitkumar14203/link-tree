@@ -15,7 +15,6 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const uploadPath = path.join(__dirname, '../../uploads/profiles');
@@ -40,7 +39,7 @@ const upload = multer({
     if (mimetype && extname) {
       return cb(null, true);
     }
-    cb(null, false);
+    cb(new Error('Only image files are allowed!'));
   }
 });
 
@@ -50,8 +49,10 @@ router.route("/")
   .get(authenticate, getLinkProfile)
   .post(authenticate, updateLinkProfile);
 
-router.post("/upload-image", authenticate, upload.single('image'), uploadProfileImage);
-router.get("/public/:username", getPublicLinkProfile);
-router.post("/track-click/:linkId", trackLinkClick);
+router.post('/upload-image', authenticate, upload.single('image'), uploadProfileImage);
+
+// New routes for public access and tracking clicks
+router.get('/public/:username', getPublicLinkProfile);
+router.post('/click', trackLinkClick);
 
 export default router;
