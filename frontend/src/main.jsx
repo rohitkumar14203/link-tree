@@ -10,6 +10,17 @@ import { configureAxios } from "./utils/config";
 // Configure axios with authentication
 configureAxios(axios);
 
+axios.interceptors.request.use(
+  (config) => {
+    console.log("Making request to:", config.url);
+    return config;
+  },
+  (error) => {
+    console.error("Request error:", error);
+    return Promise.reject(error);
+  }
+);
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
