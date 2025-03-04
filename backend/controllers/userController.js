@@ -56,15 +56,13 @@ const loginUser = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      token: token, // Return token in response
+      token: token // Return token in response
     });
   } else {
     res.status(401);
     throw new Error("Invalid email or password");
   }
 });
-
-// Similarly update registerUser function
 
 // Similarly update registerUser function
 // @desc    Update user profile
