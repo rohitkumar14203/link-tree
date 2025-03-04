@@ -59,11 +59,25 @@ const Link = () => {
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) {
-      console.log('No file selected');
+      setMessage('No file selected');
       return;
     }
 
-    console.log('Uploading file:', file.name, 'Type:', file.type);
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
+      setMessage('Please upload an image file (JPEG, PNG, or GIF)');
+      return;
+    }
+
+    // Validate file size (5MB limit)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      setMessage('File size must be less than 5MB');
+      return;
+    }
+
+    console.log('Uploading file:', file.name, 'Type:', file.type, 'Size:', file.size);
 
     const formData = new FormData();
     formData.append('image', file);
@@ -75,10 +89,9 @@ const Link = () => {
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${currentUser.token}`
           },
-          withCredentials: true,
+          withCredentials: true
         }
       );
 
@@ -90,8 +103,8 @@ const Link = () => {
         setMessage('Profile image updated successfully');
       }
     } catch (error) {
-      console.error('Upload error:', error.response?.data || error.message);
-      setMessage('Failed to upload image. Please try again.');
+      console.error('Upload error:', error.response?.data || error);
+      setMessage(error.response?.data?.message || 'Failed to upload image. Please try again.');
     } finally {
       setLoading(false);
     }
