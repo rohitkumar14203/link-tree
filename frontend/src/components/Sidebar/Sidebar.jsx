@@ -11,7 +11,6 @@ import logo from "../../assets/Signup/singup_logo.png";
 import defaultAvatar from "../../assets/SocialMedia/user.png";
 import { API_URL, getProfileImageUrl } from "../../utils/config";
 import { logout } from "../../store/slices/authSlice";
-import spark from "../../assets/nav/Spark.png"
 
 const Sidebar = () => {
   const location = useLocation();

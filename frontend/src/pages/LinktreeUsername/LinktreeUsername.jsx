@@ -37,7 +37,7 @@ const LinktreeUsername = () => {
     }
 
     if (!hasError) {
-      // Simply navigate to the link page without making API calls
+      // Navigate to link page
       navigate("/link");
     }
   };
@@ -64,6 +64,7 @@ const LinktreeUsername = () => {
               }`}
               value={username}
               onChange={handleUsernameChange}
+              required
             />
             {usernameError && (
               <p className={styles.errorMessage}>{usernameError}</p>
@@ -71,44 +72,49 @@ const LinktreeUsername = () => {
           </div>
 
           <div className={styles.categorySection}>
-            <h3 className={styles.categoryHeading}>
-              What best describes what you do?
-            </h3>
+            <p className={styles.categoryHeading}>
+              Select one category that best describes your Linktree:
+            </p>
+
             <div className={styles.categoryGrid}>
               {[
-                "Creator",
-                "Business",
-                "Musician",
-                "Designer",
-                "Community",
-                "Writer",
-                "Gamer",
-                "Developer",
+                { icon: "🏢", name: "Business" },
+                { icon: "🎨", name: "Creative" },
+                { icon: "📚", name: "Education" },
+                { icon: "🎵", name: "Entertainment" },
+                { icon: "💄", name: "Fashion & Beauty" },
+                { icon: "🍔", name: "Food & Beverage" },
+                { icon: "⚖️", name: "Government & Politics" },
+                { icon: "❤️", name: "Health & Wellness" },
+                { icon: "💝", name: "Non-Profit" },
+                { icon: "💕", name: "Other" },
+                { icon: "💻", name: "Tech" },
+                { icon: "✈️", name: "Travel & Tourism" },
               ].map((category) => (
-                <div
-                  key={category}
-                  className={`${styles.categoryItem} ${
-                    selectedCategory === category ? styles.selected : ""
+                <button
+                  key={category.name}
+                  className={`${styles.categoryButton} ${
+                    selectedCategory === category.name ? styles.active : ""
                   }`}
-                  onClick={() => handleCategorySelect(category)}
+                  onClick={() => handleCategorySelect(category.name)}
+                  type="button"
                 >
-                  {category}
-                </div>
+                  <span className={styles.icon}>{category.icon}</span>{" "}
+                  {category.name}
+                </button>
               ))}
             </div>
             {error && <p className={styles.errorMessage}>{error}</p>}
           </div>
 
-          <button 
-            className={styles.continueButton} 
-            onClick={handleContinue}
-          >
+          <button className={styles.continueButton} onClick={handleContinue}>
             Continue
           </button>
         </div>
       </div>
+
       <div className={styles.imageSection}>
-        <img src={img} alt="Signup" className={styles.sideImage} />
+        <img src={img} alt="Onboarding visual" className={styles.sideImage} />
       </div>
     </div>
   );
