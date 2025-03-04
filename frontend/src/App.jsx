@@ -23,14 +23,12 @@ function App() {
         {/* Add the LinkTree route */}
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/linktree-user" element={<LinktreeUser />} />
+          <Route path="/linktree-username" element={<LinktreeUser />} />
           <Route element={<Layout />}>
             <Route path="/link" element={<Link />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/appearance" element={<Appearance />} />
             <Route path="/analytics" element={<Analytics />} />
-
-
           </Route>
         </Route>
       </Routes>
