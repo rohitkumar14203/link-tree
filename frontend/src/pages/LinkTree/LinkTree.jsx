@@ -96,43 +96,44 @@ const LinkTree = () => {
   }, [username]);
   // Track link clicks
   const trackLinkClick = async (linkId, isShopLink = false) => {
-    if (!profileData) return;
-
     try {
-      console.log("Tracking click for link:", linkId, "isShop:", isShopLink);
-
-      // Use the correct endpoint from linkRoutes.js
-      await axios.post(`${API_URL}/links/click`, {
+      console.log(`Tracking click for ${isShopLink ? 'shop' : 'regular'} link: ${linkId}`);
+      
+      // Make API call to track the click
+      await axios.post(`${API_URL}/analytics/track-link`, {
         linkId,
-        isShopLink,
+        isShopLink
       });
-
-      console.log("Click tracked successfully");
+      
+      // Update local state to show the link as clicked
+      setClickedLinks(prev => ({
+        ...prev,
+        [linkId]: true
+      }));
+      
     } catch (error) {
-      console.error("Error tracking link click:", error);
+      console.error('Error tracking link click:', error);
     }
   };
-
   // Handle link click
   const handleLinkClick = (linkId, isShopLink = false) => {
-    // Update clicked state for animation
+    trackLinkClick(linkId, isShopLink);
+  };
+  // Update clicked state for animation
+  setClickedLinks((prev) => ({
+    ...prev,
+    [linkId]: true,
+  }));
+  // Track the click
+  trackLinkClick(linkId, isShopLink);
+  // Reset clicked state after animation
+  setTimeout(() => {
     setClickedLinks((prev) => ({
       ...prev,
-      [linkId]: true,
+      [linkId]: false,
     }));
-
-    // Track the click
-    trackLinkClick(linkId, isShopLink);
-
-    // Reset clicked state after animation
-    setTimeout(() => {
-      setClickedLinks((prev) => ({
-        ...prev,
-        [linkId]: false,
-      }));
-    }, 500);
-  };
-
+  }, 500);
+};
   // Get the appropriate icon for the app
   const getAppIcon = (app) => {
     switch (app) {
@@ -148,24 +149,20 @@ const LinkTree = () => {
         return null;
     }
   };
-
   // Handle carousel navigation
   const handlePrevSlide = () => {
     const activeLinks =
       activeTab === "link" ? profileData.links : profileData.shopLinks;
     setCurrentSlide((prev) => (prev > 0 ? prev - 1 : activeLinks.length - 1));
   };
-
   const handleNextSlide = () => {
     const activeLinks =
       activeTab === "link" ? profileData.links : profileData.shopLinks;
     setCurrentSlide((prev) => (prev < activeLinks.length - 1 ? prev + 1 : 0));
   };
-
   if (loading) {
     return <div className={styles.loadingContainer}>Loading...</div>;
   }
-
   if (error || !profileData) {
     return (
       <div className={styles.errorContainer}>
@@ -175,11 +172,9 @@ const LinkTree = () => {
       </div>
     );
   }
-
   const { profileTitle, bio, backgroundColor, profileImage, links, shopLinks } =
     profileData;
   const activeLinks = activeTab === "link" ? links : shopLinks;
-
   // Render links based on layout type
   const renderLinks = () => {
     if (!activeLinks || activeLinks.length === 0) {
@@ -189,7 +184,6 @@ const LinkTree = () => {
         </p>
       );
     }
-
     switch (appearance.layout) {
       case "grid":
         return (
@@ -225,7 +219,6 @@ const LinkTree = () => {
             ))}
           </div>
         );
-
       case "carousel":
         return (
           <div className={styles.carouselContainer}>
@@ -298,7 +291,6 @@ const LinkTree = () => {
             </div>
           </div>
         );
-
       case "stack":
       default:
         return (
@@ -336,7 +328,6 @@ const LinkTree = () => {
         );
     }
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.linkTreeContent}>

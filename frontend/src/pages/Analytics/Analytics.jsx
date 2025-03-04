@@ -34,9 +34,25 @@ const Analytics = () => {
   const { user } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [analytics, setAnalytics] = useState(null);
-  const [dateRange, setDateRange] = useState('Feb 8th to Feb 15th');
   const [error, setError] = useState('');
   const [refreshInterval, setRefreshInterval] = useState(null);
+  
+  // Get current date range dynamically
+  const getCurrentDateRange = () => {
+    const today = new Date();
+    const lastWeek = new Date(today);
+    lastWeek.setDate(today.getDate() - 7);
+    
+    const formatDate = (date) => {
+      const options = { month: 'short', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    };
+    
+    return `${formatDate(lastWeek)} to ${formatDate(today)}`;
+  };
+  
+  const [dateRange, setDateRange] = useState(getCurrentDateRange());
+  
   // Function to fetch analytics data
   const fetchAnalytics = async () => {
     if (!user) return;
@@ -61,34 +77,6 @@ const Analytics = () => {
   
       if (response.data) {
         console.log('Analytics data received:', response.data);
-        
-        // Validate the data structure
-        if (!response.data.overview) {
-          console.warn('Missing overview data in API response');
-        } else {
-          console.log('Overview data:', {
-            linkClicks: response.data.overview.linkClicks,
-            shopClicks: response.data.overview.shopClicks,
-            ctaClicks: response.data.overview.ctaClicks
-          });
-        }
-        
-        // Check monthly data
-        if (!response.data.monthlyData || !response.data.monthlyData.labels || !response.data.monthlyData.data) {
-          console.warn('Missing or incomplete monthly data');
-        } else {
-          console.log('Monthly data labels:', response.data.monthlyData.labels);
-          console.log('Monthly data values:', response.data.monthlyData.data);
-        }
-        
-        // Check link data
-        if (!response.data.linkData || !response.data.linkData.labels || !response.data.linkData.data) {
-          console.warn('Missing or incomplete link data');
-        } else {
-          console.log('Link data labels:', response.data.linkData.labels);
-          console.log('Link data values:', response.data.linkData.data);
-        }
-        
         setAnalytics(response.data);
         setError('');
       } else {
@@ -106,6 +94,7 @@ const Analytics = () => {
       setLoading(false);
     }
   };
+
   // Initial fetch on component mount
   useEffect(() => {
     fetchAnalytics();
@@ -118,6 +107,7 @@ const Analytics = () => {
       if (refreshInterval) clearInterval(refreshInterval);
     };
   }, [user]);
+
   // Line chart options and data
   const lineOptions = {
     responsive: true,
@@ -171,11 +161,11 @@ const Analytics = () => {
       }
     }
   };
-  const lineData = analytics ? {
-    labels: analytics.monthlyData?.labels || [],
+  const lineData = analytics?.monthlyData ? {
+    labels: analytics.monthlyData.labels || [],
     datasets: [
       {
-        data: analytics.monthlyData?.data || [],
+        data: analytics.monthlyData.data || [],
         borderColor: '#22c55e',
         backgroundColor: 'rgba(34, 197, 94, 0.1)',
         fill: true,
@@ -229,11 +219,11 @@ const Analytics = () => {
     borderRadius: 4
   };
   // Device data
-  const deviceData = analytics ? {
-    labels: analytics.deviceData?.labels || [],
+  const deviceData = analytics?.deviceData ? {
+    labels: analytics.deviceData.labels || [],
     datasets: [
       {
-        data: analytics.deviceData?.data || [],
+        data: analytics.deviceData.data || [],
         backgroundColor: [
           '#86efac', // Light green
           '#4ade80', // Medium green
@@ -248,11 +238,11 @@ const Analytics = () => {
     ],
   } : null;
   // Site data
-  const siteData = analytics ? {
-    labels: analytics.siteData?.labels || [],
+  const siteData = analytics?.siteData ? {
+    labels: analytics.siteData.labels || [],
     datasets: [
       {
-        data: analytics.siteData?.data || [],
+        data: analytics.siteData.data || [],
         backgroundColor: [
           '#155e39', // Dark green
           '#4ade80', // Medium green
@@ -266,11 +256,11 @@ const Analytics = () => {
     ],
   } : null;
   // Link data
-  const linkData = analytics ? {
-    labels: analytics.linkData?.labels || [],
+  const linkData = analytics?.linkData ? {
+    labels: analytics.linkData.labels || [],
     datasets: [
       {
-        data: analytics.linkData?.data || [],
+        data: analytics.linkData.data || [],
         backgroundColor: [
           '#86efac', // Light green
           '#4ade80', // Medium green
@@ -355,47 +345,56 @@ const Analytics = () => {
         </div>
       </div>
   
-      <div className={styles.chartContainer}>
-        {lineData && <Line options={lineOptions} data={lineData} />}
-      </div>
+      {analytics?.monthlyData && (
+        <div className={styles.chartContainer}>
+          {lineData && <Line options={lineOptions} data={lineData} />}
+        </div>
+      )}
   
       <div className={styles.chartsRow}>
-        <div className={styles.chartCard}>
-          <h3>Traffic by Device</h3>
-          <div className={styles.barChartContainer}>
-            {deviceData && <Bar options={barOptions} data={deviceData} />}
-          </div>
-        </div>
-        <div className={styles.chartCard}>
-          <h3>Sites</h3>
-          <div className={styles.doughnutContainer}>
-            {siteData && <Doughnut data={siteData} options={{ 
-              plugins: { 
-                legend: { display: false } 
-              },
-              cutout: '70%'
-            }} />}
-            <div className={styles.siteStats}>
-              {analytics?.siteData?.labels?.map((label, index) => (
-                <div key={label} className={styles.siteStat}>
-                  <div className={styles.siteLabel}>
-                    <span className={styles.siteDot} style={{ backgroundColor: siteData?.datasets[0].backgroundColor[index] }}></span>
-                    <span>{label}</span>
-                  </div>
-                  <span>{analytics.siteData?.data[index]}</span>
-                </div>
-              ))}
+        {analytics?.deviceData && (
+          <div className={styles.chartCard}>
+            <h3>Traffic by Device</h3>
+            <div className={styles.barChartContainer}>
+              {deviceData && <Bar options={barOptions} data={deviceData} />}
             </div>
           </div>
-        </div>
+        )}
+        
+        {analytics?.siteData && (
+          <div className={styles.chartCard}>
+            <h3>Sites</h3>
+            <div className={styles.doughnutContainer}>
+              {siteData && <Doughnut data={siteData} options={{ 
+                plugins: { 
+                  legend: { display: false } 
+                },
+                cutout: '70%'
+              }} />}
+              <div className={styles.siteStats}>
+                {analytics?.siteData?.labels?.map((label, index) => (
+                  <div key={label} className={styles.siteStat}>
+                    <div className={styles.siteLabel}>
+                      <span className={styles.siteDot} style={{ backgroundColor: siteData?.datasets[0].backgroundColor[index] }}></span>
+                      <span>{label}</span>
+                    </div>
+                    <span>{analytics.siteData?.data[index]}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
   
-      <div className={styles.chartCard}>
-        <h3>Traffic by Links</h3>
-        <div className={styles.barChartContainer}>
-          {linkData && <Bar options={barOptions} data={linkData} />}
+      {analytics?.linkData && (
+        <div className={styles.chartCard}>
+          <h3>Traffic by Links</h3>
+          <div className={styles.barChartContainer}>
+            {linkData && <Bar options={barOptions} data={linkData} />}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
