@@ -1,6 +1,6 @@
 // Environment configuration
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-export const UPLOADS_URL = import.meta.env.VITE_UPLOADS_URL || 'http://localhost:5000/uploads';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://link-tree-egre.onrender.com/api';
+export const UPLOADS_URL = import.meta.env.VITE_UPLOADS_URL || 'https://link-tree-egre.onrender.com/uploads';
 
 // Helper function to get profile image URL
 export const getProfileImageUrl = (imageName) => {
