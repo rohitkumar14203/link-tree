@@ -93,14 +93,17 @@ export const updateUserProfile = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify(userData),
+        credentials: "include", // Add this line to include cookies in the request
       });
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || "Update failed");
+      }
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message);
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || "Profile update failed");
+      return rejectWithValue(error.message || "Update failed");
     }
   }
 );
