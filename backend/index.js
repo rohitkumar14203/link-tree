@@ -14,6 +14,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path"; // Add this import
 import cors from "cors";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const uploadsDir = path.join(__dirname, "../uploads");
@@ -48,10 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Ensure uploads directory exists
-import { mkdirSync } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+
 
 // Create uploads directories if they don't exist
 try {
