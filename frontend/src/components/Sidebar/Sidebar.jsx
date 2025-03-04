@@ -8,7 +8,6 @@ import appearance from "../../assets/nav/appearance.png";
 import analytics from "../../assets/nav/analytics.png";
 import setting from "../../assets/nav/setting.png";
 import logo from "../../assets/Signup/singup_logo.png";
-import spark from "../../assets/nav/spark.png";
 import defaultAvatar from "../../assets/SocialMedia/user.png";
 import { API_URL, getProfileImageUrl } from "../../utils/config";
 import { logout } from "../../store/slices/authSlice";
@@ -167,7 +166,7 @@ const Sidebar = () => {
           )}
         </div>
       </div>
-      
+
       {/* Mobile Bottom Navigation */}
       <div className={styles.mobileNavigation}>
         <Link
