@@ -322,103 +322,64 @@ const Analytics = () => {
         </div>
       </div>
   
-      {analytics && analytics.overview && (
-        <>
-          <h2 className={styles.sectionTitle}>Overview</h2>
-          
-          <div className={styles.statsCards}>
-            {analytics.overview.linkClicks > 0 && (
-              <div className={styles.statsCard}>
-                <h3>Clicks on Links</h3>
-                <p className={styles.statValue}>{analytics.overview.linkClicks.toLocaleString()}</p>
-              </div>
-            )}
-            
-            {analytics.overview.shopClicks > 0 && (
-              <div className={styles.statsCard}>
-                <h3>Click on Shop</h3>
-                <p className={styles.statValue}>{analytics.overview.shopClicks.toLocaleString()}</p>
-              </div>
-            )}
-            
-            {analytics.overview.ctaClicks > 0 && (
-              <div className={styles.statsCard}>
-                <h3>CTA</h3>
-                <p className={styles.statValue}>{analytics.overview.ctaClicks.toLocaleString()}</p>
-              </div>
-            )}
-            
-            {analytics.overview.linkClicks === 0 && 
-             analytics.overview.shopClicks === 0 && 
-             analytics.overview.ctaClicks === 0 && (
-              <div className={styles.noDataMessage}>
-                No click data available yet. Share your links to start collecting analytics.
-              </div>
-            )}
-          </div>
-        </>
-      )}
-  
-      {lineData && (
-        <div className={styles.chartContainer}>
-          <h3>Monthly Trends</h3>
-          <Line options={lineOptions} data={lineData} />
+      <h2 className={styles.sectionTitle}>Overview</h2>
+      
+      <div className={styles.statsCards}>
+        <div className={styles.statsCard}>
+          <h3>Clicks on Links</h3>
+          <p className={styles.statValue}>{analytics?.overview?.linkClicks?.toLocaleString() || '0'}</p>
         </div>
-      )}
-  
-      <div className={styles.chartsRow}>
-        {deviceData && (
-          <div className={styles.chartCard}>
-            <h3>Traffic by Device</h3>
-            <div className={styles.barChartContainer}>
-              <Bar options={barOptions} data={deviceData} />
-            </div>
-          </div>
-        )}
-        
-        {siteData && (
-          <div className={styles.chartCard}>
-            <h3>Sites</h3>
-            <div className={styles.doughnutContainer}>
-              <Doughnut data={siteData} options={{ 
-                plugins: { 
-                  legend: { display: false } 
-                },
-                cutout: '70%'
-              }} />
-              <div className={styles.siteStats}>
-                {analytics.siteData.labels.map((label, index) => (
-                  <div key={label} className={styles.siteStat}>
-                    <div className={styles.siteLabel}>
-                      <span className={styles.siteDot} style={{ backgroundColor: siteData.datasets[0].backgroundColor[index] }}></span>
-                      <span>{label}</span>
-                    </div>
-                    <span>{analytics.siteData.data[index]}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+        <div className={styles.statsCard}>
+          <h3>Click on Shop</h3>
+          <p className={styles.statValue}>{analytics?.overview?.shopClicks?.toLocaleString() || '0'}</p>
+        </div>
+        <div className={styles.statsCard}>
+          <h3>CTA</h3>
+          <p className={styles.statValue}>{analytics?.overview?.ctaClicks?.toLocaleString() || '0'}</p>
+        </div>
       </div>
   
-      {linkData && (
+      <div className={styles.chartContainer}>
+        {lineData && <Line options={lineOptions} data={lineData} />}
+      </div>
+  
+      <div className={styles.chartsRow}>
         <div className={styles.chartCard}>
-          <h3>Traffic by Links</h3>
+          <h3>Traffic by Device</h3>
           <div className={styles.barChartContainer}>
-            <Bar options={barOptions} data={linkData} />
+            {deviceData && <Bar options={barOptions} data={deviceData} />}
           </div>
         </div>
-      )}
-      
-      {(!lineData && !deviceData && !siteData && !linkData) && (
-        <div className={styles.noDataContainer}>
-          <p>No analytics data available yet. Start by sharing your links to generate data.</p>
-          <button className={styles.refreshButton} onClick={handleRefresh}>
-            Refresh
-          </button>
+        <div className={styles.chartCard}>
+          <h3>Sites</h3>
+          <div className={styles.doughnutContainer}>
+            {siteData && <Doughnut data={siteData} options={{ 
+              plugins: { 
+                legend: { display: false } 
+              },
+              cutout: '70%'
+            }} />}
+            <div className={styles.siteStats}>
+              {analytics?.siteData?.labels?.map((label, index) => (
+                <div key={label} className={styles.siteStat}>
+                  <div className={styles.siteLabel}>
+                    <span className={styles.siteDot} style={{ backgroundColor: siteData?.datasets[0].backgroundColor[index] }}></span>
+                    <span>{label}</span>
+                  </div>
+                  <span>{analytics.siteData?.data[index]}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      )}
+      </div>
+  
+      <div className={styles.chartCard}>
+        <h3>Traffic by Links</h3>
+        <div className={styles.barChartContainer}>
+          {linkData && <Bar options={barOptions} data={linkData} />}
+        </div>
+      </div>
     </div>
   );
 };
