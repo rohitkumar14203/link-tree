@@ -1,20 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import axios from "axios";
 import styles from "./LinktreeUsername.module.css";
 import logo from "../../assets/LinktreeUsername/logo.png";
 import img from "../../assets/Signup/signup-bcg.png";
-import { API_URL } from "../../utils/config";
 
 const LinktreeUsername = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
   const [username, setUsername] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [error, setError] = useState("");
   const [usernameError, setUsernameError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -28,7 +23,7 @@ const LinktreeUsername = () => {
     }
   };
 
-  const handleContinue = async () => {
+  const handleContinue = () => {
     let hasError = false;
 
     if (!selectedCategory) {
@@ -42,32 +37,8 @@ const LinktreeUsername = () => {
     }
 
     if (!hasError) {
-      try {
-        setIsSubmitting(true);
-        
-        // Create initial link profile with the username
-        await axios.post(
-          `${API_URL}/links`,
-          {
-            profileTitle: username,
-            bio: "",
-            backgroundColor: "#ffffff",
-            links: [],
-            shopLinks: [],
-            socialLinks: {},
-            category: selectedCategory
-          },
-          { withCredentials: true }
-        );
-        
-        // Navigate to link page after successful save
-        navigate("/link");
-      } catch (error) {
-        console.error("Error saving username:", error);
-        setError("Failed to save username. Please try again.");
-      } finally {
-        setIsSubmitting(false);
-      }
+      // Simply navigate to the link page without making API calls
+      navigate("/link");
     }
   };
 
@@ -131,9 +102,8 @@ const LinktreeUsername = () => {
           <button 
             className={styles.continueButton} 
             onClick={handleContinue}
-            disabled={isSubmitting}
           >
-            {isSubmitting ? "Saving..." : "Continue"}
+            Continue
           </button>
         </div>
       </div>
