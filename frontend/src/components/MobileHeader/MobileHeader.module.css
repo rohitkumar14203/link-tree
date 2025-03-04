@@ -1,0 +1,43 @@
+.mobileHeader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 16px;
+  z-index: 1000;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 28px;
+  margin-right: 8px;
+}
+
+.logoText {
+  font-weight: 600;
+  font-size: 18px;
+  color: #333;
+}
+
+.userAvatar img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .mobileHeader {
+    display: flex;
+  }
+}

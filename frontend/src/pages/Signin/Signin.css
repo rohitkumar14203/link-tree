@@ -1,0 +1,213 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Preahvihear&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+.signup-main-container {
+  margin-left: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signup-left {
+  display: flex;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.signup-middle {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 130px;
+}
+
+.singup-heading {
+  font-family: Poppins;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 57.6px;
+  letter-spacing: -2px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.create-account {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.create-account-heading {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 22.55px;
+  line-height: 33.83px;
+  letter-spacing: 0%;
+  color: rgba(51, 51, 51, 1);
+}
+
+.signin-instead {
+  color: rgba(40, 162, 99, 1);
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 11.28px;
+  line-height: 16.91px;
+  letter-spacing: 0%;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: Auto;
+}
+
+.forms-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19.5px;
+  letter-spacing: 0%;
+}
+
+form input {
+  width: 500px;
+  height: 42px;
+  border-radius: 10px;
+  border-width: 0.7px;
+  background-color: rgba(239, 240, 236, 1);
+  padding: 10px;
+  border: none;
+}
+
+input::placeholder {
+  color: rgba(103, 107, 95, 1);
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0%;
+}
+
+.check-box {
+  display: flex;
+}
+.policy {
+  width: 320px;
+  margin-bottom: 50px;
+  margin-top: 25px;
+}
+
+.terms {
+  text-decoration: underline;
+}
+
+.login-btn {
+  width: 500px;
+  height: 42px;
+  opacity: 0.25;
+  border-radius: 28.19px;
+  background-color: rgba(224, 226, 217, 1);
+  color: rgba(0 0 0);
+  border: none;
+  margin-top: 50px;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+  text-align: center;
+}
+
+.signup-right {
+  left: 50%;
+  background-image: url("../../assets//Signup//signup-bcg.png");
+  width: 70vh;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.forgot {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 50px;
+  align-items: center;
+}
+
+.forgot-password p {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0%;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: Auto;
+  color: rgba(40, 162, 99, 1);
+}
+
+.dont-have {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dont-have p {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0%;
+  color: rgba(0, 0, 0, 1);
+}
+
+.dont-have span {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0%;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: Auto;
+  color: rgba(40, 162, 99, 1);
+}
+
+.captcha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 140px;
+}
+
+.captcha p {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  text-align: center;
+  color: rgba(103, 107, 95, 1);
+}
+
+.captcha span {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: Auto;
+  color: rgba(103, 107, 95, 1);
+}
+

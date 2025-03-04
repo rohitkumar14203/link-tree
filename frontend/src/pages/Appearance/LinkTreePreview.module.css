@@ -1,0 +1,283 @@
+.previewContainer {
+  .phonePreview {
+    width: 375px;
+    height: 667px;
+    border: 12px solid #000;
+    border-radius: 2rem;
+    overflow: hidden;
+    background-color: white;
+  }
+}
+
+.linkTreeContent {
+  padding: 5px 10px;
+  border-radius: 0 0 30px 30px;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profileImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.profileTitle {
+  font-size: 1.5rem;
+  margin: 5px 0;
+}
+
+.bio {
+  font-size: 0.9rem;
+  margin: 5px 0 15px;
+}
+
+.socialIconsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.socialIcon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.socialIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pillToggleContainer {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.pillToggle {
+  position: relative;
+  display: flex;
+  background-color: #e0e0e0;
+  border-radius: 30px;
+  padding: 3px;
+  width: 180px;
+}
+
+.pillButton {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  border-radius: 30px;
+  z-index: 1;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.activePill {
+  color: #fff;
+}
+
+.pillSlider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  background-color: #4caf50;
+  border-radius: 30px;
+  transition: transform 0.3s ease;
+}
+
+.linksContainer {
+  padding: 0 15px 15px;
+  overflow-y: auto;
+}
+
+.linkButton,
+.shopButton {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 40px;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  background-color: #c9c9c9;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.linkButton:hover,
+.shopButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.appIconContainer {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+}
+
+.appIcon {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+}
+
+.linkTitle,
+.shopItemTitle {
+  flex: 1;
+}
+
+.shopItemPrice {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: #888;
+  padding: 20px 0;
+}
+.connectButton {
+  margin-top: auto;
+  width: 80%;
+  padding: 14px 20px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.connectButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
+}
+
+.sparkLogo {
+  text-align: center;
+  padding: 15px 0;
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: bold;
+}
+/* Add these carousel styles to your existing CSS file */
+/* Add these styles for the carousel layout */
+.carouselContainer {
+  width: 100%;
+  padding: 10px 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.carouselControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.carouselButton {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carouselIndicators {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.activeIndicator {
+  background-color: #4caf50;
+}
+
+.carouselSlide {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+/* Style for the carousel link button to display items in column */
+.carouselSlide a {
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  flex-direction: column !important; /* Force column layout */
+  justify-content: center;
+  align-items: center !important; /* Center items horizontally */
+  margin: 0 auto;
+  padding: 15px !important; /* Add more padding */
+}
+
+.carouselSlide .appIconContainer {
+  margin-bottom: 10px; /* Add space between icon and text */
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+
+.carouselSlide .linkTitle {
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
+
+.carouselSlide .shopItemTitle {
+  width: 100%;
+  text-align: center;
+}
+
+.carouselSlide .appIcon {
+  width: 24px;
+  height: 24px;
+}

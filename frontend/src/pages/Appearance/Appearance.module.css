@@ -1,0 +1,649 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto 0 250px; /* Add left margin equal to sidebar width */
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.header p {
+  color: #666;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  gap: 30px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  
+}
+
+/* Phone Preview Section */
+.previewSection {
+  flex: 0 0 300px;
+}
+
+.phonePreview {
+  width: 375px;
+  height: 667px;
+  border: 12px solid #000;
+  border-radius: 2rem;
+  overflow: hidden;
+  background: white;
+}
+
+.shareIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.shareButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.profileImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.profileCard h2 {
+  color: white;
+  font-size: 18px;
+  margin: 0;
+}
+
+.linkButtons {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.linkButton,
+.shopButton {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.activeTab {
+  border-bottom: 2px solid white;
+}
+
+.previewLinks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.previewLinkButton {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  text-decoration: none;
+  color: white;
+}
+
+.preImgDiv {
+  margin-right: 10px;
+}
+
+.preImgDiv img {
+  width: 20px;
+  height: 20px;
+}
+
+.prevTitle {
+  font-size: 14px;
+}
+
+.connectButton {
+  margin-top: auto;
+  width: 80%;
+  padding: 10px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.sparkLogo {
+  color: white;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/* Edit Section */
+.editSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.layoutSection,
+.buttonsSection,
+.fontsSection,
+.themesSection {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.layoutSection h2,
+.buttonsSection h2,
+.fontsSection h2,
+.themesSection h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.layoutOptions {
+  display: flex;
+  gap: 20px;
+}
+
+.layoutOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.layoutIcon {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.stackIcon,
+.gridIcon,
+.carouselIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.stackIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 5h18v2H3V5zm0 6h18v2H3v-2zm0 6h18v2H3v-2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.gridIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 3h8v8H3V3zm10 0h8v8h-8V3zm0 10h8v8h-8v-8zM3 13h8v8H3v-8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.carouselIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2 5h6v14H2V5zm8 0h6v14h-6V5zm8 0h6v14h-6V5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.selectedLayout .layoutIcon {
+  border-color: #4caf50;
+}
+/* Add these styles to your existing CSS file */
+
+.buttonsSection {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.buttonStylesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.buttonStyles {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Fill button styles */
+.fillButtonRect, .fillButtonRounded, .fillButtonPill {
+  width: 112px;
+  height: 40px;
+  background-color: #000;
+  border: none;
+  cursor: pointer;
+}
+
+.fillButtonRect {
+  border-radius: 0;
+}
+
+.fillButtonRounded {
+  border-radius: 8px;
+}
+
+.fillButtonPill {
+  border-radius: 20px;
+}
+
+/* Outline button styles */
+.outlineButtonRect, .outlineButtonRounded, .outlineButtonPill {
+  width: 112px;
+  height: 40px;
+  background-color: transparent;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.outlineButtonRect {
+  border-radius: 0;
+}
+
+.outlineButtonRounded {
+  border-radius: 8px;
+}
+
+.outlineButtonPill {
+  border-radius: 20px;
+}
+
+/* Hard shadow button styles */
+.hardShadowButtonRect, .hardShadowButtonRounded, .hardShadowButtonPill {
+  width: 112px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+  position: relative;
+}
+
+.hardShadowButtonRect {
+  border-radius: 0;
+}
+
+.hardShadowButtonRounded {
+  border-radius: 8px;
+}
+
+.hardShadowButtonPill {
+  border-radius: 20px;
+}
+
+/* Soft shadow button styles */
+.softShadowButtonRect, .softShadowButtonRounded, .softShadowButtonPill {
+  width: 112px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.softShadowButtonRect {
+  border-radius: 0;
+}
+
+.softShadowButtonRounded {
+  border-radius: 8px;
+}
+
+.softShadowButtonPill {
+  border-radius: 20px;
+}
+/* Special button styles based on the image */
+.specialButtonScalloped {
+  width: 112px;
+  height: 40px;
+  background-color: #000;
+  border: none;
+  border-radius: 0;
+  clip-path: polygon(0% 10%, 10% 0%, 20% 10%, 30% 0%, 40% 10%, 50% 0%, 60% 10%, 70% 0%, 80% 10%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 80% 90%, 70% 100%, 60% 90%, 50% 100%, 40% 90%, 30% 100%, 20% 90%, 10% 100%, 0% 90%);
+  cursor: pointer;
+}
+
+.specialButtonWavy {
+  width: 112px;
+  height: 40px;
+  background-color: #000;
+  border: none;
+  border-radius: 0;
+  clip-path: polygon(0% 10%, 10% 0%, 20% 10%, 30% 0%, 40% 10%, 50% 0%, 60% 10%, 70% 0%, 80% 10%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 80% 90%, 70% 100%, 60% 90%, 50% 100%, 40% 90%, 30% 100%, 20% 90%, 10% 100%, 0% 90%);
+  cursor: pointer;
+}
+
+.specialButtonFramed {
+  width: 112px;
+  height: 40px;
+  background-color: transparent;
+  border: 1px solid #000;
+  outline: 1px solid #000;
+  outline-offset: 3px;
+  cursor: pointer;
+}
+
+.specialButtonRounded {
+  width: 112px;
+  height: 40px;
+  background-color: #000;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.specialButtonFrameless {
+  width: 112px;
+  height: 40px;
+  background-color: transparent;
+  border: 1px dashed #000;
+  cursor: pointer;
+}
+
+.specialButtonShadowed {
+  width: 112px;
+  height: 40px;
+  background-color: #000;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.selectedButton {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+.colorSection {
+  margin-top: 1.5rem;
+}
+
+.colorPicker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.colorPreview {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.colorValue {
+  display: flex;
+  flex-direction: column;
+}
+
+.colorValue span:first-child {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.colorValue span:last-child {
+  font-weight: 500;
+}
+/* Font Section */
+.fontSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.fontDropdown {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fontIcon {
+  font-size: 18px;
+  color: #000;
+}
+
+.fontName {
+  font-size: 14px;
+  color: #000;
+}
+
+/* Theme Options */
+.themeOptions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.themeOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.themePreview {
+  width: 100%;
+  height: 120px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.airSnowTheme,
+.airGreyTheme,
+.airSmokeTheme,
+.airBlackTheme,
+.mineralBlueTheme,
+.mineralGreenTheme,
+.mineralOrangeTheme {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.airSnowTheme {
+  background-color: #fff;
+}
+
+.airGreyTheme {
+  background-color: #f5f5f5;
+}
+
+.airSmokeTheme {
+  background-color: #333;
+}
+
+.airBlackTheme {
+  background-color: #000;
+}
+
+.mineralBlueTheme {
+  background-color: #e6f7ff;
+}
+
+.mineralGreenTheme {
+  background-color: #e6fff0;
+}
+
+.mineralOrangeTheme {
+  background-color: #fff7e6;
+}
+
+.themeOption span {
+  font-size: 14px;
+  color: #000;
+}
+
+.selectedTheme .themePreview {
+  border-color: #4caf50;
+}
+
+/* Save Button */
+.saveButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.saveButton {
+  padding: 10px 30px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.saveButton:hover {
+  background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .previewSection {
+    margin: 0 auto;
+  }
+
+  .themeOptions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Update the container styles for mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    margin: 0; /* Remove left margin on mobile */
+  }
+  
+  .content {
+    height: auto; /* Remove fixed height on mobile */
+    overflow-y: visible;
+    flex-direction: column;
+  }
+  
+  .previewSection {
+    flex: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .phonePreview {
+    width: 300px; /* Smaller phone preview on mobile */
+    height: 534px; /* Maintain aspect ratio */
+  }
+  
+  .themeOptions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .buttonStyles {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .layoutOptions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .editSection {
+    padding: 0;
+  }
+  
+  .saveButtonContainer {
+    justify-content: center;
+  }
+  
+  .saveButton {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .phonePreview {
+    width: 260px;
+    height: 463px;
+  }
+  
+  .layoutSection,
+  .buttonsSection,
+  .fontsSection,
+  .themesSection {
+    padding: 15px;
+  }
+  
+  .themeOptions {
+    grid-template-columns: 1fr;
+  }
+  
+  .fillButtonRect, .fillButtonRounded, .fillButtonPill,
+  .outlineButtonRect, .outlineButtonRounded, .outlineButtonPill,
+  .hardShadowButtonRect, .hardShadowButtonRounded, .hardShadowButtonPill,
+  .softShadowButtonRect, .softShadowButtonRounded, .softShadowButtonPill,
+  .specialButtonScalloped, .specialButtonWavy, .specialButtonFramed,
+  .specialButtonRounded, .specialButtonFrameless, .specialButtonShadowed {
+    width: 90px;
+    height: 36px;
+  }
+}
+  
+  

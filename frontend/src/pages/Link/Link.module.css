@@ -1,0 +1,981 @@
+.container {
+  padding: 2rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 0 250px; /* Add left margin equal to sidebar width */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.shareButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: white;
+}
+.message {
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.uploadButton {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #22c55e;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.uploadButton:hover {
+  background-color: #16a34a;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+.modalContent h2 {
+  margin-bottom: 1rem;
+}
+.modalContent input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+}
+.modalButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.modalButtons button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.modalButtons button:first-child {
+  background: #22c55e;
+  color: white;
+  border: none;
+}
+.modalButtons button:last-child {
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+.linksList,
+.shopLinksList {
+  margin-top: 1rem;
+}
+.linkItem,
+.shopLinkItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+.linkItem button,
+.shopLinkItem button {
+  padding: 0.25rem 0.5rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  gap: 2rem;
+  flex: 1;
+}
+.previewSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.phonePreview {
+  width: 375px;
+  height: 667px;
+  border: 12px solid #000;
+  border-radius: 2rem;
+  overflow: hidden;
+  background: white;
+}
+.profileCard {
+  position: relative;
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+.shareIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+}
+.profileImage {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+}
+.bioText {
+  margin-top: 0.5rem;
+}
+.editSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.profileSection,
+.bannerSection {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+.profileImageUpload {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.currentImage {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.uploadButton,
+.removeButton {
+  display: block;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem 0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.uploadButton {
+  background: #22c55e;
+  color: white;
+  border: none;
+}
+.removeButton {
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+.profileFields {
+  margin: 1.5rem 0;
+}
+.inputGroup {
+  margin-bottom: 1rem;
+}
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.inputGroup input,
+.inputGroup textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+}
+.charCount {
+  display: block;
+  text-align: right;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.addButtons {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.addLinkButton,
+.addShopButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  background: white;
+}
+.addButton {
+  width: 100%;
+  padding: 0.75rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  margin-top: 1rem;
+}
+.colorPicker {
+  margin-top: 1rem;
+}
+.colorOptions {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.colorOption {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+.brown {
+  background-color: #3c3431;
+}
+.white {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+.black {
+  background-color: #000000;
+}
+.colorInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+}
+.footer {
+  margin-top: 2rem;
+  text-align: right;
+}
+.saveButton {
+  padding: 0.75rem 2rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+}
+.linkButtons {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center;
+  background-color: #e5e7eb;
+  width: fit-content;
+  margin: 1rem auto;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.linkButton,
+.shopButton {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 2rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.linkButton {
+  background-color: transparent;
+  color: #333;
+}
+
+.shopButton {
+  background-color: transparent;
+  color: #333;
+}
+
+.activePreviewTab {
+  background-color: #22c55e;
+  color: white;
+}
+
+/* Remove the previous border-bottom style */
+.activePreviewTab {
+  border-bottom: none;
+}
+.socialLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+.youtubeButton,
+.instagramButton {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #f3f4f6;
+  text-align: left;
+}
+.connectButton {
+  margin-top: auto;
+  width: 80%;
+  padding: 14px 20px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.connectButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
+}
+.sparkLogo {
+  text-align: center;
+  margin-top: 2rem;
+  color: #6b7280;
+}
+.tabButtons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.addLinkSection {
+  margin-top: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.addLinkHeader {
+  padding: 1rem;
+}
+
+.tabButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tabButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: #f3f4f6;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tabButton.activeTab {
+  background-color: #22c55e;
+  color: white;
+}
+
+.tabIcon {
+  font-size: 1.2rem;
+}
+
+.urlFormContainer {
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 0 0 8px 8px;
+}
+
+.formTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.formField {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.toggleSwitch {
+  position: absolute;
+  right: 10px;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleSwitch label {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.toggleSwitch label:after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: white;
+  top: 2px;
+  left: 2px;
+  transition: 0.3s;
+}
+
+.toggleSwitch input:checked + label {
+  background-color: #22c55e;
+}
+
+.toggleSwitch input:checked + label:after {
+  left: calc(100% - 18px);
+}
+
+.urlButtons {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.copyButton,
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.applicationsTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 1.5rem 0 1rem;
+}
+
+.socialApps {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.appIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+  cursor: pointer;
+}
+
+.appIcon img {
+  width: 50px;
+  height: 50px;
+  background-color: #f3f4f6;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.addButton {
+  padding: 0.5rem 1.5rem;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.cancelButton {
+  padding: 0.5rem 1.5rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.previewContent {
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.previewLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.previewLinkButton {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  background: #c9c9c9;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  border-radius: 100px;
+  gap: 12px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+}
+.preImgDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  border-radius: 27px;
+  -webkit-border-radius: 27px;
+  -moz-border-radius: 27px;
+  -ms-border-radius: 27px;
+  -o-border-radius: 27px;
+}
+.preTitleDiv {
+  flex: 1;
+  text-align: left;
+}
+.previewAppIcon {
+  width: 27px;
+  height: 27px;
+}
+.prevTitle {
+  font-weight: 500;
+  color: #1e1e20;
+  font-size: 16px;
+}
+.previewShopLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.previewShopItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+.previewShopInfo {
+  display: flex;
+  flex-direction: column;
+}
+.previewShopTitle {
+  font-weight: 500;
+}
+.previewShopPrice {
+  color: #22c55e;
+}
+.previewBuyButton {
+  padding: 0.5rem 1rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+}
+.emptyPreview {
+  text-align: center;
+  color: #6b7280;
+  padding: 2rem 0;
+}
+.activePreviewTab {
+  border-bottom: 2px solid #22c55e;
+  color: white;
+}
+.existingLinks,
+.existingShopItems {
+  margin-top: 1.5rem;
+}
+.linkInfo,
+.shopItemInfo {
+  flex: 1;
+}
+.linkInfo h4,
+.shopItemInfo h4 {
+  margin: 0;
+}
+.linkUrl,
+.shopItemUrl,
+.shopItemPrice {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.shopItemPrice {
+  color: #22c55e;
+  font-weight: 500;
+}
+.deleteLinkButton,
+.deleteShopButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.bioText {
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+.previewContent {
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.previewLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.previewShopLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.previewShopItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+.previewShopInfo {
+  display: flex;
+  flex-direction: column;
+}
+.previewShopTitle {
+  font-weight: 500;
+}
+.previewShopPrice {
+  color: #22c55e;
+}
+.previewBuyButton {
+  padding: 0.5rem 1rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+}
+.emptyPreview {
+  text-align: center;
+  color: #6b7280;
+  padding: 2rem 0;
+}
+
+.formContainer {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+.url {
+  margin-top: 1rem;
+}
+.urlInputContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+.formInput {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+}
+.urlButtons {
+  display: flex;
+  gap: 0.25rem;
+}
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.socialIcons {
+  margin-top: 1rem;
+}
+.iconsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.icon img {
+  width: 32px;
+  height: 32px;
+}
+.cancelBtn {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.addUrlBtn {
+  padding: 0.5rem 1rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.bannerContent {
+  margin-top: 1rem;
+}
+.colorInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+.colorPicker {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0;
+  left: -3px;
+  top: -3px;
+}
+
+.colorInput {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  font-size: 14px;
+  width: 230px;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  -ms-border-radius: 0.25rem;
+  -o-border-radius: 0.25rem;
+}
+.box {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.saveContainer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.saveBtn {
+  padding: 0.5rem 1.5rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.btnIcon {
+  width: 16px;
+  height: 16px;
+}
+.activeTab {
+  background: #22c55e;
+  color: white;
+}
+.selectedIcon {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.icon {
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.2s ease;
+}
+
+.bannerText {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.bannerText > img {
+  height: 19px;
+  width: 19px;
+}
+
+
+
+/* Add these responsive styles at the end of your existing CSS */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    margin: 0;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .shareButton {
+    margin-top: 10px;
+    align-self: flex-end;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .previewSection {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .phonePreview {
+    width: 300px;
+    height: 534px;
+  }
+
+  .editSection {
+    width: 100%;
+  }
+
+  .profileImageUpload {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileImageUpload > div {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .profileFields {
+    margin-top: 20px;
+  }
+
+  .addLinkHeader {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tabButtons {
+    width: 100%;
+  }
+
+  .addButton {
+    align-self: flex-end;
+  }
+
+  .formContainer {
+    padding: 15px;
+  }
+
+  .urlInputContainer {
+    flex-direction: column;
+  }
+
+  .urlButtons {
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+
+  .socialIcons .iconsContainer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .bannerContent {
+    flex-direction: column;
+  }
+
+  .colorOptions {
+    justify-content: center;
+  }
+
+  .colorInputContainer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .phonePreview {
+    width: 260px;
+    height: 463px;
+  }
+
+  .tabButton {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .formInput {
+    font-size: 14px;
+  }
+
+  .icon {
+    width: 70px;
+  }
+
+  .saveBtn {
+    width: 100%;
+  }
+}

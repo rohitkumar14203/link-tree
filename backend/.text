@@ -1,0 +1,42 @@
+Create a backend for a Linktree-like application using Node.js, Express.js, and MongoDB. The backend should handle user profiles, links, shop links, and analytics tracking. Implement the following features with proper security, validation, and error handling:"
+
+🔸 Tech Stack
+Node.js with Express.js for backend
+MongoDB with Mongoose for database
+Multer for file uploads
+JWT authentication (if needed)
+CORS enabled
+🔸 Features
+1️⃣ User Management
+Create a User model with:
+username (required, unique, trimmed)
+bio (optional)
+profileImage (uploaded file stored on server)
+links[] (title, URL, click count)
+shopLinks[] (title, URL, click count)
+analytics (traffic tracking: by device, by link, by referrer)
+API to upload profile images using Multer
+2️⃣ Links & Shop Links Management
+CRUD operations for links and shopLinks
+Add, update, delete personal links
+Track clicks on links & shop links
+3️⃣ Analytics Tracking
+Track clicks per link & shop link
+Capture traffic sources (referrer sites like Instagram, Twitter, etc.)
+Detect device type (mobile, desktop, tablet)
+4️⃣ API Endpoints
+Method	Endpoint	Description
+POST	/api/user/upload-profile	Upload profile image
+POST	/api/links/add	Add a new link
+GET	/api/links/:userId	Fetch all links of a user
+DELETE	/api/links/:linkId	Delete a link
+POST	/api/analytics/track	Track link clicks
+GET	/api/analytics/:userId	Get analytics data
+🔸 Requirements
+✅ Use dotenv for environment variables
+✅ Implement CORS for cross-origin requests
+✅ Use Mongoose for schema validation
+✅ Implement error handling middleware
+
+Expected Output:
+A fully functional Express.js backend with MongoDB, featuring user management, link storage, analytics tracking, and secure file uploads.
