@@ -24,13 +24,21 @@ export const getAuthToken = () => {
 
 // Configure axios defaults
 export const configureAxios = (axios) => {
+  axios.defaults.withCredentials = true;
+  
   axios.interceptors.request.use(
     (config) => {
       const token = getAuthToken();
+      config.headers = {
+        ...config.headers,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      };
+      
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
-      config.withCredentials = true;
+      
       return config;
     },
     (error) => {

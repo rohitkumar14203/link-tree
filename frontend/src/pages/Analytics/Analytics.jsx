@@ -45,9 +45,20 @@ const Analytics = () => {
         setLoading(true);
         console.log('Fetching analytics data...');
         
-        // Try the debug endpoint first to check connectivity
+        // Common headers for all requests
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+          'Cache-Control': 'no-cache',
+          'Accept': 'application/json'
+        };
+        
+        // Try the debug endpoint first
         try {
-          const debugResponse = await axios.get(`${API_URL}/analytics/debug`);
+          const debugResponse = await axios.get(`${API_URL}/analytics/debug`, {
+            headers,
+            withCredentials: true
+          });
           console.log('Debug endpoint response:', debugResponse.data);
         } catch (debugError) {
           console.log('Debug endpoint error:', debugError.message);
@@ -55,18 +66,11 @@ const Analytics = () => {
         
         // Make the actual analytics request
         const response = await axios.get(`${API_URL}/analytics`, {
+          headers,
           withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`,
-            'Cache-Control': 'no-cache',
-          },
-          // Add timeout to prevent hanging requests
           timeout: 10000
         });
   
-        console.log('API Response status:', response.status);
-        
         if (response.data) {
           console.log('Analytics data received:', response.data);
           setAnalytics(response.data);
