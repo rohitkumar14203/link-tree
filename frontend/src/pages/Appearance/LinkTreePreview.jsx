@@ -33,33 +33,7 @@ const LinkTreePreview = ({ previewData, isPreview }) => {
   if (!previewData) {
     return <div className={styles.previewContainer}>Loading preview...</div>;
   }
-  // In the LinkTreePreview component, ensure it's using the theme correctly
-  
-  // Update the backgroundColor logic to handle theme changes
-  const getBackgroundColorFromTheme = (theme) => {
-    if (theme.startsWith("air")) {
-      return "#3C3431";
-    } else if (theme === "mineral-blue") {
-      return "#E6F4F1";
-    } else if (theme === "mineral-green") {
-      return "#E6F4EC";
-    } else if (theme === "mineral-orange") {
-      return "#F9EFE8";
-    }
-    return backgroundColor; // Fall back to the provided backgroundColor
-  };
-  
-  // Then use this in your component:
-  <div
-    className={styles.linkTreeContent}
-    style={{ 
-      backgroundColor: appearance?.theme 
-        ? getBackgroundColorFromTheme(appearance.theme) 
-        : backgroundColor 
-    }}
-  >
-    {/* Rest of your component */}
-  </div>
+
   const {
     profileTitle = "",
     bio = "",
