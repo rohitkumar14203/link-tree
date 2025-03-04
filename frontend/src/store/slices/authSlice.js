@@ -1,133 +1,95 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API_URL } from "../../utils/config";
 
-export const signup = createAsyncThunk(
-  "auth/signup",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${API_URL}/users/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          email: userData.email,
-          password: userData.password,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message || "Registration failed");
-    }
+// Signup Thunk
+export const signup = createAsyncThunk("auth/signup", async (userData, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}/users/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message || "Registration failed");
   }
-);
+});
 
-// Update the login and signup handlers to store token
-export const login = createAsyncThunk(
-  "auth/login",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${API_URL}/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          email: userData.email,
-          password: userData.password,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message);
-      
-      // Store user data with token in localStorage
-      if (data.token) {
-        localStorage.setItem("user", JSON.stringify({
-          ...data,
-          token: data.token
-        }));
-      } else {
-        localStorage.setItem("user", JSON.stringify(data));
-      }
-      
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message || "Login failed");
-    }
+// Login Thunk
+export const login = createAsyncThunk("auth/login", async (userData, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}/users/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    localStorage.setItem("user", JSON.stringify(data));
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message || "Login failed");
   }
-);
+});
 
-// Similarly update the signup thunk
-
-// Add logout thunk
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`${API_URL}/users/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message || "Logout failed");
-    }
+// Logout Thunk
+export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}/users/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message || "Logout failed");
   }
-);
+});
 
-// Fix updateUserProfile to use fetch instead of axios
+// Update User Profile Thunk
 export const updateUserProfile = createAsyncThunk(
   "auth/updateProfile",
   async (userData, { rejectWithValue, getState }) => {
     try {
-      // Get token from state
-      const token = getState().auth.user?.token;
+      // Get the current user from state
+      const currentUser = getState().auth.user;
       
       const response = await fetch(`${API_URL}/users/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          // Include token in Authorization header if available
-          ...(token && { "Authorization": `Bearer ${token}` })
+          // The backend is likely expecting the token in a cookie, not as a header
+          // So we'll rely on credentials: "include" to send the cookies
         },
         body: JSON.stringify(userData),
-        credentials: "include", // Include cookies
+        credentials: "include",
       });
-      if (!response.ok) {
-        const errorData = await response.json();
-        return rejectWithValue(errorData.message || "Update failed");
-      }
-      const data = await response.json();
-      
-      // Update localStorage with new user data
-      const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
-      localStorage.setItem("user", JSON.stringify({
-        ...currentUser,
-        ...data,
-        token: currentUser.token // Preserve the token
-      }));
-      
-      return data;
+
+      const responseData = await response.json();
+
+      if (!response.ok) throw new Error(responseData.message || "Update failed");
+
+      // Update localStorage with merged data
+      const updatedUser = { ...currentUser, ...responseData };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
+      return updatedUser; // Return the complete updated user object
     } catch (error) {
       return rejectWithValue(error.message || "Update failed");
     }
   }
 );
 
+// Auth Slice
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user"))
-      : null,
+    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     isLoading: false,
     isError: false,
     isSuccess: false,
@@ -143,7 +105,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Login cases
       .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
@@ -151,14 +112,12 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
-      // Signup cases
       .addCase(signup.pending, (state) => {
         state.isLoading = true;
       })
@@ -166,14 +125,12 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(signup.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
-      // Add updateUserProfile cases
       .addCase(updateUserProfile.pending, (state) => {
         state.isLoading = true;
       })
@@ -181,30 +138,16 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
-
-      // Logout cases
-      .addCase(logout.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(logout.fulfilled, (state) => {
         state.isLoading = false;
-        state.isSuccess = false;
-        state.isError = false;
-        state.message = "";
         state.user = null;
         localStorage.removeItem("user");
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
       });
   },
 });

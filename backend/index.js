@@ -27,7 +27,7 @@ connectDB();
 // Updated CORS configuration with additional options
 app.use(
   cors({
-    origin: ["https://link-tree-swart-eight.vercel.app", "http://localhost:5173"],
+    origin: "https://link-tree-swart-eight.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]

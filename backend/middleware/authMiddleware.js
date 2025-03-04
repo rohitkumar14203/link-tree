@@ -3,15 +3,18 @@ import User from "../modal/userModal.js";
 import asyncHandler from "./asyncHandler.js";
 
 const authenticate = asyncHandler(async (req, res, next) => {
-  let token;
+  // Check for token in cookies first
+  let token = req.cookies.jwt;
   
-  // Check for token in cookies
-  if (req.cookies && req.cookies.jwt) {
-    token = req.cookies.jwt;
-  } 
-  // Check Authorization header
-  else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ')[1];
+  // If no token in cookies, check Authorization header
+  if (!token && req.headers.authorization) {
+    // Handle both "Bearer token" and just "token" formats
+    const authHeader = req.headers.authorization;
+    if (authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else {
+      token = authHeader;
+    }
   }
 
   if (token) {
