@@ -22,7 +22,7 @@ const Signin = () => {
 
   useEffect(() => {
     if (isSuccess || user) {
-      navigate("/linktree-user");
+      navigate("/linktree-username");
     }
     return () => {
       dispatch(reset()); // Cleanup on unmount
