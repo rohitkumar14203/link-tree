@@ -143,7 +143,28 @@ const Link = () => {
         });
 
         if (appearanceResponse.data) {
-          setAppearanceSettings(appearanceResponse.data);
+          // Store the complete appearance settings object
+          setAppearanceSettings({
+            layout: appearanceResponse.data.layout || "stack",
+            buttonStyle: appearanceResponse.data.buttonStyle || "fill",
+            buttonColor: appearanceResponse.data.buttonColor || "#111111",
+            buttonFontColor: appearanceResponse.data.buttonFontColor || "#888888",
+            font: appearanceResponse.data.font || "DM Sans",
+            textColor: appearanceResponse.data.textColor || "#ffffff",
+            theme: appearanceResponse.data.theme || "air-snow",
+          });
+          
+          // Update background color based on theme
+          const theme = appearanceResponse.data.theme || "air-snow";
+          if (theme.startsWith("air")) {
+            setBackgroundColor("#3C3431");
+          } else if (theme === "mineral-blue") {
+            setBackgroundColor("#E6F4F1");
+          } else if (theme === "mineral-green") {
+            setBackgroundColor("#E6F4EC");
+          } else if (theme === "mineral-orange") {
+            setBackgroundColor("#F9EFE8");
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -369,7 +390,6 @@ const Link = () => {
     }
   };
   // ... existing code ...
-
   // Update the previewData to use the appearance settings
   const previewData = {
     profileTitle,
@@ -377,19 +397,15 @@ const Link = () => {
     profileImage,
     links,
     shopLinks,
-    socialLinks: {}, // You can add social links here if needed
+    socialLinks: {}, // Add this if you have social links in your Link page
     backgroundColor,
-    appearance: {
-      layout: appearanceSettings.layout || "stack",
-      buttonStyle: appearanceSettings.buttonStyle || "fill",
-      buttonColor: appearanceSettings.buttonColor || "#111111",
-      buttonFontColor: appearanceSettings.buttonFontColor || "#ffffff",
-      font: appearanceSettings.font || "DM Sans",
-      textColor: appearanceSettings.textColor || "#ffffff",
-      theme: appearanceSettings.theme || "air-snow",
-    },
+    appearance: appearanceSettings,
   };
-
+  // Then in your JSX where you render the preview:
+  <LinkTreePreview 
+    previewData={previewData} 
+    isPreview={true} 
+  />
   return (
     <div className={styles.container}>
       <header className={styles.header}>

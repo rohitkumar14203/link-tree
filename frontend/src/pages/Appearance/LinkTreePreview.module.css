@@ -93,7 +93,7 @@
   color: #fff;
 }
 .linksScrollContainer {
-  max-height: 300px; /* Set a maximum height */
+  max-height: 240px; /* Set a maximum height */
   overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
   padding: 0 15px;
   margin-bottom: 15px;

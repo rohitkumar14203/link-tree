@@ -37,11 +37,10 @@ const Analytics = () => {
   const [dateRange, setDateRange] = useState('Feb 8th to Feb 15th');
   const [error, setError] = useState('');
   const [refreshInterval, setRefreshInterval] = useState(null);
-
   // Function to fetch analytics data
   const fetchAnalytics = async () => {
     if (!user) return;
-
+  
     try {
       console.log('Fetching analytics data...');
       
@@ -59,9 +58,37 @@ const Analytics = () => {
         withCredentials: true,
         timeout: 10000
       });
-
+  
       if (response.data) {
         console.log('Analytics data received:', response.data);
+        
+        // Validate the data structure
+        if (!response.data.overview) {
+          console.warn('Missing overview data in API response');
+        } else {
+          console.log('Overview data:', {
+            linkClicks: response.data.overview.linkClicks,
+            shopClicks: response.data.overview.shopClicks,
+            ctaClicks: response.data.overview.ctaClicks
+          });
+        }
+        
+        // Check monthly data
+        if (!response.data.monthlyData || !response.data.monthlyData.labels || !response.data.monthlyData.data) {
+          console.warn('Missing or incomplete monthly data');
+        } else {
+          console.log('Monthly data labels:', response.data.monthlyData.labels);
+          console.log('Monthly data values:', response.data.monthlyData.data);
+        }
+        
+        // Check link data
+        if (!response.data.linkData || !response.data.linkData.labels || !response.data.linkData.data) {
+          console.warn('Missing or incomplete link data');
+        } else {
+          console.log('Link data labels:', response.data.linkData.labels);
+          console.log('Link data values:', response.data.linkData.data);
+        }
+        
         setAnalytics(response.data);
         setError('');
       } else {
@@ -79,7 +106,6 @@ const Analytics = () => {
       setLoading(false);
     }
   };
-
   // Initial fetch on component mount
   useEffect(() => {
     fetchAnalytics();
@@ -92,7 +118,6 @@ const Analytics = () => {
       if (refreshInterval) clearInterval(refreshInterval);
     };
   }, [user]);
-
   // Line chart options and data
   const lineOptions = {
     responsive: true,
@@ -146,7 +171,6 @@ const Analytics = () => {
       }
     }
   };
-
   const lineData = analytics ? {
     labels: analytics.monthlyData?.labels || [],
     datasets: [
@@ -158,7 +182,6 @@ const Analytics = () => {
       },
     ],
   } : null;
-
   // Bar chart options
   const barOptions = {
     responsive: true,
@@ -205,7 +228,6 @@ const Analytics = () => {
     barThickness: 30,
     borderRadius: 4
   };
-
   // Device data
   const deviceData = analytics ? {
     labels: analytics.deviceData?.labels || [],
@@ -225,7 +247,6 @@ const Analytics = () => {
       },
     ],
   } : null;
-
   // Site data
   const siteData = analytics ? {
     labels: analytics.siteData?.labels || [],
@@ -244,7 +265,6 @@ const Analytics = () => {
       },
     ],
   } : null;
-
   // Link data
   const linkData = analytics ? {
     labels: analytics.linkData?.labels || [],
@@ -264,17 +284,14 @@ const Analytics = () => {
       },
     ],
   } : null;
-
   // Add refresh button handler
   const handleRefresh = () => {
     setLoading(true);
     fetchAnalytics();
   };
-
   if (loading) {
     return <div className={styles.loading}>Loading analytics...</div>;
   }
-
   if (error) {
     return (
       <div className={styles.error}>
@@ -285,7 +302,6 @@ const Analytics = () => {
       </div>
     );
   }
-
   if (!analytics) {
     return (
       <div className={styles.error}>
@@ -296,7 +312,6 @@ const Analytics = () => {
       </div>
     );
   }
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -322,7 +337,7 @@ const Analytics = () => {
           </button>
         </div>
       </div>
-
+  
       <h2 className={styles.sectionTitle}>Overview</h2>
       
       <div className={styles.statsCards}>
@@ -339,11 +354,11 @@ const Analytics = () => {
           <p className={styles.statValue}>{analytics?.overview?.ctaClicks?.toLocaleString() || '0'}</p>
         </div>
       </div>
-
+  
       <div className={styles.chartContainer}>
         {lineData && <Line options={lineOptions} data={lineData} />}
       </div>
-
+  
       <div className={styles.chartsRow}>
         <div className={styles.chartCard}>
           <h3>Traffic by Device</h3>
@@ -374,7 +389,7 @@ const Analytics = () => {
           </div>
         </div>
       </div>
-
+  
       <div className={styles.chartCard}>
         <h3>Traffic by Links</h3>
         <div className={styles.barChartContainer}>
