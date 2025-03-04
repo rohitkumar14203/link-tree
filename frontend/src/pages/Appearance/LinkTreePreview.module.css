@@ -97,7 +97,7 @@
   overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
   padding: 0 15px;
   margin-bottom: 15px;
-  
+
   /* Custom scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: rgba(76, 175, 80, 0.5) transparent;
@@ -314,4 +314,83 @@
 .carouselSlide .appIcon {
   width: 24px;
   height: 24px;
+}
+
+.pillToggleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.pillToggle {
+  display: flex;
+  background-color: #e9e9e9;
+  border-radius: 30px;
+  position: relative;
+  padding: 4px;
+  width: 220px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.pillButton {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: none;
+  color: #777;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  transition: color 0.3s;
+  text-align: center;
+}
+
+.activePill {
+  color: #fff;
+}
+
+.pillSlider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background-color: #4caf50;
+  border-radius: 30px;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  gap: 15px;
+  margin-bottom: 40px;
+  padding: 0 15px;
+}
+
+.linkButton,
+.shopButton {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 40px;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  background-color: #c9c9c9;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.linkButton:hover,
+.shopButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
