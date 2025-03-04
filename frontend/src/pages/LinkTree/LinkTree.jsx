@@ -81,6 +81,11 @@ const LinkTree = () => {
               if (response.data.socialLinks) {
                 setSocialLinks(response.data.socialLinks);
               }
+              // Update appearance settings when polling
+              if (response.data.appearance) {
+                setAppearance(response.data.appearance);
+                console.log("Updated appearance settings:", response.data.appearance);
+              }
             }
           })
           .catch((err) => console.error("Error polling for updates:", err));
