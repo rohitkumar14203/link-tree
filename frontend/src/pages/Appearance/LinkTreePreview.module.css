@@ -368,7 +368,6 @@
 .linksContainer {
   display: flex;
   flex-direction: column;
-  width: 90%;
   gap: 15px;
   margin-bottom: 40px;
   padding: 0 15px;

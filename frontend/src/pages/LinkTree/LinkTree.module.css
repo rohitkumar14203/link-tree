@@ -187,7 +187,31 @@
     transform: scale(1);
   }
 }
+.gridLayout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
 
+.gridLayout .linkButton,
+.gridLayout .shopButton {
+  margin-bottom: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px 10px;
+}
+.gridLayout .appIconContainer {
+  margin-right: 0;
+  margin-bottom: 8px;
+}
+.gridLayout .linkTitle,
+.gridLayout .shopItemTitle {
+  font-size: 14px;
+}
 .appIconContainer {
   margin-right: 15px;
   width: 70px;
