@@ -45,6 +45,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValu
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
+    localStorage.removeItem("user");
     return data;
   } catch (error) {
     return rejectWithValue(error.message || "Logout failed");
@@ -59,12 +60,15 @@ export const updateUserProfile = createAsyncThunk(
       // Get the current user from state
       const currentUser = getState().auth.user;
       
+      // Get token from localStorage
+      const token = currentUser?.token;
+      
       const response = await fetch(`${API_URL}/users/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          // The backend is likely expecting the token in a cookie, not as a header
-          // So we'll rely on credentials: "include" to send the cookies
+          // Add Authorization header with token
+          ...(token && { Authorization: `Bearer ${token}` }),
         },
         body: JSON.stringify(userData),
         credentials: "include",

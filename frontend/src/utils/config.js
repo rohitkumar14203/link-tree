@@ -33,6 +33,8 @@ export const configureAxios = (axios) => {
       config.withCredentials = true;
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => {
+      return Promise.reject(error);
+    }
   );
 };
