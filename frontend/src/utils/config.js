@@ -28,33 +28,12 @@ export const configureAxios = (axios) => {
     (config) => {
       const token = getAuthToken();
       if (token) {
-        // Set Authorization header with Bearer token
         config.headers.Authorization = `Bearer ${token}`;
       }
-      
-      // Always include credentials for cross-origin requests
       config.withCredentials = true;
-      
-      // Add additional headers to help with CORS preflight
-      config.headers['Access-Control-Allow-Origin'] = '*';
-      config.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
-      config.headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, X-Request-With';
-      
       return config;
     },
     (error) => {
-      return Promise.reject(error);
-    }
-  );
-  
-  // Add response interceptor to handle common errors
-  axios.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error.response && error.response.status === 401) {
-        console.error('Authentication error:', error.response.data);
-        // You could redirect to login page or refresh token here
-      }
       return Promise.reject(error);
     }
   );
