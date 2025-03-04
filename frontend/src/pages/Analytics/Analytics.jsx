@@ -45,9 +45,14 @@ const Analytics = () => {
         setLoading(true);
         console.log('Fetching analytics data...');
         
+        // Get token from localStorage
+        const userToken = user.token;
+        
         const response = await axios.get(`${API_URL}/analytics`, {
           withCredentials: true,
           headers: {
+            'Authorization': `Bearer ${userToken}`,
+            'Content-Type': 'application/json',
             'Cache-Control': 'no-cache',
             'Pragma': 'no-cache',
             'Expires': '0',
@@ -65,7 +70,11 @@ const Analytics = () => {
         }
       } catch (error) {
         console.error('Error fetching analytics:', error);
-        setError(`Failed to load analytics data: ${error.message}`);
+        // Provide more specific error message
+        const errorMessage = error.response 
+          ? `Server error: ${error.response.status} - ${error.response.data?.message || 'Unknown error'}`
+          : `Network error: ${error.message}`;
+        setError(`Failed to load analytics data: ${errorMessage}`);
       } finally {
         setLoading(false);
       }
