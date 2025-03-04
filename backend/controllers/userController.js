@@ -50,12 +50,13 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.password))) {
-    generateToken(res, user._id);
+    const token = generateToken(res, user._id);
     res.json({
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      token: token, // Return token in response
     });
   } else {
     res.status(401);
@@ -63,6 +64,9 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// Similarly update registerUser function
+
+// Similarly update registerUser function
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private

@@ -27,6 +27,7 @@ export const signup = createAsyncThunk(
   }
 );
 
+// Update the login and signup handlers to store token
 export const login = createAsyncThunk(
   "auth/login",
   async (userData, { rejectWithValue }) => {
@@ -44,12 +45,25 @@ export const login = createAsyncThunk(
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
+      
+      // Store user data with token in localStorage
+      if (data.token) {
+        localStorage.setItem("user", JSON.stringify({
+          ...data,
+          token: data.token
+        }));
+      } else {
+        localStorage.setItem("user", JSON.stringify(data));
+      }
+      
       return data;
     } catch (error) {
       return rejectWithValue(error.message || "Login failed");
     }
   }
 );
+
+// Similarly update the signup thunk
 
 // Add logout thunk
 export const logout = createAsyncThunk(

@@ -5,14 +5,17 @@ const generateToken = (res, userId) => {
     expiresIn: "30d",
   });
 
-  // Set JWT as HTTP-Only cookie with updated settings for cross-domain
+  // Set JWT as cookie
+  const isProduction = process.env.NODE_ENV === 'production';
+  
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: process.env.NODE_ENV === "development" ? "strict" : "none",
+    secure: isProduction, // Use secure cookies in production
+    sameSite: isProduction ? 'none' : 'lax', // Required for cross-site cookies
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
-
+  
+  // Also return the token in the response for header-based auth
   return token;
 };
 
