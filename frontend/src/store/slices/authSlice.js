@@ -86,21 +86,35 @@ export const logout = createAsyncThunk(
 // Fix updateUserProfile to use fetch instead of axios
 export const updateUserProfile = createAsyncThunk(
   "auth/updateProfile",
-  async (userData, { rejectWithValue }) => {
+  async (userData, { rejectWithValue, getState }) => {
     try {
+      // Get token from state
+      const token = getState().auth.user?.token;
+      
       const response = await fetch(`${API_URL}/users/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          // Include token in Authorization header if available
+          ...(token && { "Authorization": `Bearer ${token}` })
         },
         body: JSON.stringify(userData),
-        credentials: "include", // Add this line to include cookies in the request
+        credentials: "include", // Include cookies
       });
       if (!response.ok) {
         const errorData = await response.json();
         return rejectWithValue(errorData.message || "Update failed");
       }
       const data = await response.json();
+      
+      // Update localStorage with new user data
+      const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+      localStorage.setItem("user", JSON.stringify({
+        ...currentUser,
+        ...data,
+        token: currentUser.token // Preserve the token
+      }));
+      
       return data;
     } catch (error) {
       return rejectWithValue(error.message || "Update failed");

@@ -101,7 +101,7 @@ const Settings = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Hi, !</h1>
+        <h1>Hi, {user?.firstName || 'User'}! {user?.lastName}</h1>
         <p>Manage your account settings</p>
       </div>
 
