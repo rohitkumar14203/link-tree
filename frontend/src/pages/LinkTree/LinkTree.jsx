@@ -21,6 +21,17 @@ const LinkTree = () => {
   const [clickedLinks, setClickedLinks] = useState({});
   const [socialLinks, setSocialLinks] = useState({});
   const [analytics, setAnalytics] = useState({});
+  const [appearance, setAppearance] = useState({
+    layout: "stack",
+    buttonStyle: "fill",
+    buttonColor: "#111111",
+    buttonFontColor: "#888888",
+    font: "DM Sans",
+    textColor: "#ffffff",
+    theme: "air-snow",
+  });
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   // Fix: Remove references to undefined 'profile' variable
   // const userId = profile?.user?._id;
   // const links = profile?.links || [];
@@ -31,29 +42,33 @@ const LinkTree = () => {
       try {
         setLoading(true);
         const response = await axios.get(`${API_URL}/links/public/${username}`);
-        
+
         if (response.data) {
           setProfileData(response.data);
           if (response.data.socialLinks) {
             setSocialLinks(response.data.socialLinks);
           }
+          // Set appearance settings if available
+          if (response.data.appearance) {
+            setAppearance(response.data.appearance);
+          }
           setError(null);
         } else {
-          setError('Profile not found');
+          setError("Profile not found");
         }
       } catch (error) {
-        console.error('Error fetching profile:', error);
-        setError('Failed to load profile');
+        console.error("Error fetching profile:", error);
+        setError("Failed to load profile");
       } finally {
         setLoading(false);
       }
     };
-    
+
     if (username) {
       fetchProfile();
     }
   }, [username]);
-  
+
   // Update polling interval to use API_URL
   useEffect(() => {
     const pollInterval = setInterval(() => {
@@ -66,41 +81,58 @@ const LinkTree = () => {
               if (response.data.socialLinks) {
                 setSocialLinks(response.data.socialLinks);
               }
+              // Update appearance settings when polling
+              if (response.data.appearance) {
+                setAppearance(response.data.appearance);
+                console.log("Updated appearance settings:", response.data.appearance);
+              }
             }
           })
           .catch((err) => console.error("Error polling for updates:", err));
       }
     }, 30000); // Poll every 30 seconds
-    
+
     return () => clearInterval(pollInterval);
   }, [username]);
   // Track link clicks
   const trackLinkClick = async (linkId, isShopLink = false) => {
+    if (!profileData) return;
+
     try {
-      console.log(`Tracking click for ${isShopLink ? 'shop' : 'regular'} link: ${linkId}`);
-      
-      // Make API call to track the click
+      console.log("Tracking click for link:", linkId, "isShop:", isShopLink);
+
+      // Use the correct endpoint from analyticsRoutes.js
       await axios.post(`${API_URL}/analytics/track-link`, {
         linkId,
-        isShopLink
+        isShopLink,
+        profileId: profileData._id
       });
-      
-      // Update local state to show the link as clicked
-      setClickedLinks(prev => ({
-        ...prev,
-        [linkId]: true
-      }));
-      
+
+      console.log("Click tracked successfully");
     } catch (error) {
-      console.error('Error tracking link click:', error);
+      console.error("Error tracking link click:", error);
     }
   };
-  
   // Handle link click
   const handleLinkClick = (linkId, isShopLink = false) => {
+    // Update clicked state for animation
+    setClickedLinks((prev) => ({
+      ...prev,
+      [linkId]: true,
+    }));
+
+    // Track the click
     trackLinkClick(linkId, isShopLink);
+
+    // Reset clicked state after animation
+    setTimeout(() => {
+      setClickedLinks((prev) => ({
+        ...prev,
+        [linkId]: false,
+      }));
+    }, 500);
   };
-  
+
   // Get the appropriate icon for the app
   const getAppIcon = (app) => {
     switch (app) {
@@ -117,6 +149,19 @@ const LinkTree = () => {
     }
   };
 
+  // Handle carousel navigation
+  const handlePrevSlide = () => {
+    const activeLinks =
+      activeTab === "link" ? profileData.links : profileData.shopLinks;
+    setCurrentSlide((prev) => (prev > 0 ? prev - 1 : activeLinks.length - 1));
+  };
+
+  const handleNextSlide = () => {
+    const activeLinks =
+      activeTab === "link" ? profileData.links : profileData.shopLinks;
+    setCurrentSlide((prev) => (prev < activeLinks.length - 1 ? prev + 1 : 0));
+  };
+
   if (loading) {
     return <div className={styles.loadingContainer}>Loading...</div>;
   }
@@ -131,7 +176,167 @@ const LinkTree = () => {
     );
   }
 
-  const { profileTitle, bio, backgroundColor, profileImage, links, shopLinks } = profileData;
+  const { profileTitle, bio, backgroundColor, profileImage, links, shopLinks } =
+    profileData;
+  const activeLinks = activeTab === "link" ? links : shopLinks;
+
+  // Render links based on layout type
+  const renderLinks = () => {
+    if (!activeLinks || activeLinks.length === 0) {
+      return (
+        <p className={styles.emptyMessage}>
+          No {activeTab === "link" ? "links" : "shop items"} available
+        </p>
+      );
+    }
+
+    switch (appearance.layout) {
+      case "grid":
+        return (
+          <div className={`${styles.linksContainer} ${styles.gridLayout}`}>
+            {activeLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.linkButton} ${
+                  clickedLinks[link._id] ? styles.clickedLink : ""
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick(link._id, activeTab === "shop");
+                  setTimeout(() => {
+                    window.open(link.url, "_blank", "noopener,noreferrer");
+                  }, 300);
+                }}
+              >
+                {link.app && (
+                  <div className={styles.appIconContainer}>
+                    <img
+                      src={getAppIcon(link.app)}
+                      alt={link.app}
+                      className={styles.appIcon}
+                    />
+                  </div>
+                )}
+                <span className={styles.linkTitle}>{link.title}</span>
+              </a>
+            ))}
+          </div>
+        );
+
+      case "carousel":
+        return (
+          <div className={styles.carouselContainer}>
+            <div className={styles.carouselControls}>
+              <button
+                className={styles.carouselButton}
+                onClick={handlePrevSlide}
+              >
+                &#10094;
+              </button>
+              <div className={styles.carouselIndicators}>
+                {activeLinks.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`${styles.indicator} ${
+                      index === currentSlide ? styles.activeIndicator : ""
+                    }`}
+                    onClick={() => setCurrentSlide(index)}
+                  ></div>
+                ))}
+              </div>
+              <button
+                className={styles.carouselButton}
+                onClick={handleNextSlide}
+              >
+                &#10095;
+              </button>
+            </div>
+
+            <div className={styles.carouselSlide}>
+              {activeLinks.length > 0 && (
+                <a
+                  href={activeLinks[currentSlide].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.linkButton} ${
+                    clickedLinks[activeLinks[currentSlide]._id]
+                      ? styles.clickedLink
+                      : ""
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick(
+                      activeLinks[currentSlide]._id,
+                      activeTab === "shop"
+                    );
+                    setTimeout(() => {
+                      window.open(
+                        activeLinks[currentSlide].url,
+                        "_blank",
+                        "noopener,noreferrer"
+                      );
+                    }, 300);
+                  }}
+                >
+                  {activeLinks[currentSlide].app && (
+                    <div className={styles.appIconContainer}>
+                      <img
+                        src={getAppIcon(activeLinks[currentSlide].app)}
+                        alt={activeLinks[currentSlide].app}
+                        className={styles.appIcon}
+                      />
+                    </div>
+                  )}
+                  <span className={styles.linkTitle}>
+                    {activeLinks[currentSlide].title}
+                  </span>
+                </a>
+              )}
+            </div>
+          </div>
+        );
+
+      case "stack":
+      default:
+        return (
+          <div className={styles.linksContainer}>
+            {activeLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.linkButton} ${
+                  clickedLinks[link._id] ? styles.clickedLink : ""
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick(link._id, activeTab === "shop");
+                  setTimeout(() => {
+                    window.open(link.url, "_blank", "noopener,noreferrer");
+                  }, 300);
+                }}
+              >
+                {link.app && (
+                  <div className={styles.appIconContainer}>
+                    <img
+                      src={getAppIcon(link.app)}
+                      alt={link.app}
+                      className={styles.appIcon}
+                    />
+                  </div>
+                )}
+                <span className={styles.linkTitle}>{link.title}</span>
+              </a>
+            ))}
+          </div>
+        );
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.linkTreeContent}>
@@ -142,9 +347,7 @@ const LinkTree = () => {
           <div className={styles.profileHeader}>
             <img
               src={
-                profileImage
-                  ? getProfileImageUrl(profileImage)
-                  : defaultUser
+                profileImage ? getProfileImageUrl(profileImage) : defaultUser
               }
               alt={profileTitle}
               className={styles.profileImage}
@@ -207,7 +410,10 @@ const LinkTree = () => {
               className={`${styles.pillButton} ${
                 activeTab === "link" ? styles.activePill : ""
               }`}
-              onClick={() => setActiveTab("link")}
+              onClick={() => {
+                setActiveTab("link");
+                setCurrentSlide(0);
+              }}
             >
               link
             </button>
@@ -215,7 +421,10 @@ const LinkTree = () => {
               className={`${styles.pillButton} ${
                 activeTab === "shop" ? styles.activePill : ""
               }`}
-              onClick={() => setActiveTab("shop")}
+              onClick={() => {
+                setActiveTab("shop");
+                setCurrentSlide(0);
+              }}
             >
               Shop
             </button>
@@ -228,79 +437,9 @@ const LinkTree = () => {
             ></div>
           </div>
         </div>
-        
-        {/* Updated links container with scrollbar */}
-        <div className={styles.linksScrollContainer}>
-          <div className={styles.linksContainer}>
-            {activeTab === "link" ? (
-              links && links.length > 0 ? (
-                links.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${styles.linkButton} ${
-                      clickedLinks[link._id] ? styles.clickedLink : ""
-                    }`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleLinkClick(link._id);
-                      setTimeout(() => {
-                        window.open(link.url, "_blank", "noopener,noreferrer");
-                      }, 300);
-                    }}
-                  >
-                    {link.app && (
-                      <div className={styles.appIconContainer}>
-                        <img
-                          src={getAppIcon(link.app)}
-                          alt={link.app}
-                          className={styles.appIcon}
-                        />
-                      </div>
-                    )}
-                    <span className={styles.linkTitle}>{link.title}</span>
-                  </a>
-                ))
-              ) : (
-                <p className={styles.emptyMessage}>No links available</p>
-              )
-            ) : shopLinks && shopLinks.length > 0 ? (
-              shopLinks.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${styles.shopButton} ${
-                    clickedLinks[item._id] ? styles.clickedLink : ""
-                  }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLinkClick(item._id, true);
-                    setTimeout(() => {
-                      window.open(item.url, "_blank", "noopener,noreferrer");
-                    }, 300);
-                  }}
-                >
-                  {item.app && (
-                    <div className={styles.appIconContainer}>
-                      <img
-                        src={getAppIcon(item.app)}
-                        alt={item.app}
-                        className={styles.appIcon}
-                      />
-                    </div>
-                  )}
-                  <span className={styles.shopTitle}>{item.title}</span>
-                </a>
-              ))
-            ) : (
-              <p className={styles.emptyMessage}>No shop items available</p>
-            )}
-          </div>
-        </div>
+
+        {/* Links container with dynamic layout */}
+        <div className={styles.linksScrollContainer}>{renderLinks()}</div>
 
         <footer className={styles.footer}>
           <button className={styles.connectButton}>Get Connected</button>

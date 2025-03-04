@@ -99,51 +99,57 @@ export const getAnalytics = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Track link click
+// @desc    Track link clicks
 // @route   POST /api/analytics/track-link
 // @access  Public
 export const trackLinkClick = asyncHandler(async (req, res) => {
-  const { linkId, isShopLink = false } = req.body;
+  const { linkId, isShopLink, profileId } = req.body;
   
-  if (!linkId) {
-    return res.status(400).json({ message: 'Link ID is required' });
+  if (!linkId || !profileId) {
+    return res.status(400).json({ message: 'Link ID and profile ID are required' });
   }
   
   try {
     console.log(`Tracking click for ${isShopLink ? 'shop link' : 'link'} ID: ${linkId}`);
     
-    // Find the link profile containing this link
-    const query = isShopLink 
-      ? { 'shopLinks._id': linkId }
-      : { 'links._id': linkId };
-    
-    const linkProfile = await Link.findOne(query);
+    // Find the link profile
+    const linkProfile = await Link.findById(profileId);
     
     if (!linkProfile) {
-      console.log('Link profile not found for link ID:', linkId);
-      return res.status(404).json({ message: 'Link not found' });
+      return res.status(404).json({ message: 'Link profile not found' });
     }
     
-    // Update the click count for the specific link
+    // Update the appropriate link's click count
     if (isShopLink) {
-      const shopLink = linkProfile.shopLinks.id(linkId);
-      if (shopLink) {
-        shopLink.clickCount = (shopLink.clickCount || 0) + 1;
-        console.log(`Updated shop link click count to ${shopLink.clickCount}`);
+      const shopLinkIndex = linkProfile.shopLinks.findIndex(link => link._id.toString() === linkId);
+      
+      if (shopLinkIndex !== -1) {
+        // Increment click count or initialize to 1 if it doesn't exist
+        if (!linkProfile.shopLinks[shopLinkIndex].clickCount) {
+          linkProfile.shopLinks[shopLinkIndex].clickCount = 1;
+        } else {
+          linkProfile.shopLinks[shopLinkIndex].clickCount += 1;
+        }
       }
     } else {
-      const link = linkProfile.links.id(linkId);
-      if (link) {
-        link.clickCount = (link.clickCount || 0) + 1;
-        console.log(`Updated link click count to ${link.clickCount}`);
+      const linkIndex = linkProfile.links.findIndex(link => link._id.toString() === linkId);
+      
+      if (linkIndex !== -1) {
+        // Increment click count or initialize to 1 if it doesn't exist
+        if (!linkProfile.links[linkIndex].clickCount) {
+          linkProfile.links[linkIndex].clickCount = 1;
+        } else {
+          linkProfile.links[linkIndex].clickCount += 1;
+        }
       }
     }
     
+    // Save the updated link profile
     await linkProfile.save();
     
     res.status(200).json({ success: true });
   } catch (error) {
     console.error('Error tracking link click:', error);
-    res.status(500).json({ message: 'Error tracking link click' });
+    res.status(500).json({ message: 'Server error tracking link click' });
   }
 });
