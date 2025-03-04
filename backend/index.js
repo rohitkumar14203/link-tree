@@ -11,7 +11,6 @@ import analyticsRoutes from "./routes/analyticsRoutes.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
-import { mkdirSync } from "fs";
 import { dirname } from "path"; // Add this import
 import cors from "cors";
 
