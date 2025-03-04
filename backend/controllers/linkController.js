@@ -162,25 +162,7 @@ export const trackLinkClick = async (req, res) => {
 // @route   GET /api/links
 // @access  Private
 const getLinkProfile = asyncHandler(async (req, res) => {
-  let linkProfile = await Link.findOne({ user: req.user._id });
-  
-  if (linkProfile) {
-    res.json(linkProfile);
-  } else {
-    // Create a default profile if none exists
-    linkProfile = await Link.create({
-      user: req.user._id,
-      profileTitle: req.user.username || `user${req.user._id.toString().slice(-5)}`,
-      bio: "Welcome to my profile",
-      backgroundColor: "#ffffff",
-      links: [],
-      shopLinks: [],
-      socialLinks: {}
-    });
-    res.status(201).json(linkProfile);
-  }
-});
-const linkProfile = await Link.findOne({ user: req.user._id });
+  const linkProfile = await Link.findOne({ user: req.user._id });
   if (linkProfile) {
     res.json(linkProfile);
   } else {

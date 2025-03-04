@@ -1,14 +1,16 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../modal/userModal.js";
-import Link from "../modal/linkModal.js"; // Add this import
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
 
-// @desc    Register a new user
-// @route   POST /api/users
-// @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
+
+  // Check if all fields are provided
+  if (!firstName || !lastName || !email || !password) {
+    res.status(400);
+    throw new Error("Please fill in all fields");
+  }
 
   const userExists = await User.findOne({ email });
 
@@ -17,34 +19,23 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
   const user = await User.create({
     firstName,
     lastName,
     email,
-    password,
+    password: hashedPassword,
   });
 
   if (user) {
-    // Create a default link profile for the new user
-    const username = `user${user._id.toString().slice(-5)}`;
-    await Link.create({
-      user: user._id,
-      profileTitle: username,
-      bio: "Welcome to my profile",
-      backgroundColor: "#ffffff",
-      links: [],
-      shopLinks: [],
-      socialLinks: {}
-    });
-
     generateToken(res, user._id);
-
     res.status(201).json({
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      username: username // Return the generated username
     });
   } else {
     res.status(400);
