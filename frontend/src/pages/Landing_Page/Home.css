@@ -583,3 +583,109 @@ a {
   gap: 20px;
   align-items: center;
 }
+
+/* Add these media queries at the end of your existing CSS */
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 15px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .logo-container {
+    justify-content: center;
+  }
+
+  .hero-section {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .hero-text {
+    width: 100%;
+  }
+
+  .hero-image {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .dashboard-preview {
+    width: 100%;
+    height: auto;
+  }
+
+  .share {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .share-content {
+    width: 100%;
+    text-align: center;
+  }
+
+  .image-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .customer-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .customer-left, 
+  .customer-right {
+    width: 100%;
+  }
+
+  .card-section {
+    padding: 20px;
+  }
+
+  .card-one, 
+  .card-two {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card-one > div, 
+  .card-two > div {
+    width: 100%;
+  }
+
+  .integration-section {
+    padding: 20px;
+  }
+
+  .int-one, 
+  .int-two, 
+  .int-three {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .acknowledge {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .icons {
+    justify-content: center;
+    margin-top: 20px;
+  }
+}

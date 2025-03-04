@@ -240,74 +240,78 @@ const LinkTree = () => {
             ></div>
           </div>
         </div>
-        <div className={styles.linksContainer}>
-          {activeTab === "link" ? (
-            links && links.length > 0 ? (
-              links.map((link, index) => (
+        
+        {/* Updated links container with scrollbar */}
+        <div className={styles.linksScrollContainer}>
+          <div className={styles.linksContainer}>
+            {activeTab === "link" ? (
+              links && links.length > 0 ? (
+                links.map((link, index) => (
+                  <a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.linkButton} ${
+                      clickedLinks[link._id] ? styles.clickedLink : ""
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLinkClick(link._id);
+                      setTimeout(() => {
+                        window.open(link.url, "_blank", "noopener,noreferrer");
+                      }, 300);
+                    }}
+                  >
+                    {link.app && (
+                      <div className={styles.appIconContainer}>
+                        <img
+                          src={getAppIcon(link.app)}
+                          alt={link.app}
+                          className={styles.appIcon}
+                        />
+                      </div>
+                    )}
+                    <span className={styles.linkTitle}>{link.title}</span>
+                  </a>
+                ))
+              ) : (
+                <p className={styles.emptyMessage}>No links available</p>
+              )
+            ) : shopLinks && shopLinks.length > 0 ? (
+              shopLinks.map((item, index) => (
                 <a
                   key={index}
-                  href={link.url}
+                  href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${styles.linkButton} ${
-                    clickedLinks[link._id] ? styles.clickedLink : ""
+                  className={`${styles.shopButton} ${
+                    clickedLinks[item._id] ? styles.clickedLink : ""
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick(link._id);
+                    handleLinkClick(item._id, true);
                     setTimeout(() => {
-                      window.open(link.url, "_blank", "noopener,noreferrer");
+                      window.open(item.url, "_blank", "noopener,noreferrer");
                     }, 300);
                   }}
                 >
-                  {link.app && (
+                  {item.app && (
                     <div className={styles.appIconContainer}>
                       <img
-                        src={getAppIcon(link.app)}
-                        alt={link.app}
+                        src={getAppIcon(item.app)}
+                        alt={item.app}
                         className={styles.appIcon}
                       />
                     </div>
                   )}
-                  <span className={styles.linkTitle}>{link.title}</span>
+                  <span className={styles.shopTitle}>{item.title}</span>
                 </a>
               ))
             ) : (
-              <p className={styles.emptyMessage}>No links available</p>
-            )
-          ) : shopLinks && shopLinks.length > 0 ? (
-            shopLinks.map((item, index) => (
-              <a
-                key={index}
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${styles.shopButton} ${
-                  clickedLinks[item._id] ? styles.clickedLink : ""
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick(item._id, true);
-                  setTimeout(() => {
-                    window.open(item.url, "_blank", "noopener,noreferrer");
-                  }, 300);
-                }}
-              >
-                {item.app && (
-                  <div className={styles.appIconContainer}>
-                    <img
-                      src={getAppIcon(item.app)}
-                      alt={item.app}
-                      className={styles.appIcon}
-                    />
-                  </div>
-                )}
-                <span className={styles.shopTitle}>{item.title}</span>
-              </a>
-            ))
-          ) : (
-            <p className={styles.emptyMessage}>No shop items available</p>
-          )}
+              <p className={styles.emptyMessage}>No shop items available</p>
+            )}
+          </div>
         </div>
 
         <footer className={styles.footer}>

@@ -211,3 +211,49 @@ input::placeholder {
   color: rgba(103, 107, 95, 1);
 }
 
+/* Add these media queries at the end of your existing CSS */
+
+@media screen and (max-width: 768px) {
+  .signup-main-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .signup-left {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+
+  .signup-middle {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .signup-right {
+    display: none; /* Hide the right section on mobile */
+  }
+
+  .form-content {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .signup-form {
+    width: 100%;
+  }
+
+  .form-input {
+    width: 100%;
+  }
+
+  .login-btn {
+    width: 100%;
+  }
+
+  .forgot {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}

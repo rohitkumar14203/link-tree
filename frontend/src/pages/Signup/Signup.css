@@ -154,3 +154,138 @@ form input {
   color: rgba(238, 29, 82, 1);
 }
 
+/* Add these media queries at the end of your existing CSS */
+
+@media screen and (max-width: 768px) {
+  .signup-main-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .signup-left {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+
+  .signup-middle-section {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .signup-right {
+    display: none; /* Hide the right section on mobile */
+  }
+
+  .form-content {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .signup-form {
+    width: 100%;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .form-input {
+    width: 100%;
+  }
+
+  .create-account {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .signup-btn {
+    width: 100%;
+  }
+
+  .check-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .checkbox-label {
+    text-align: center;
+  }
+}
+
+/* Add additional breakpoint for very small devices */
+/* Add these media queries at the end of your existing CSS */
+
+@media screen and (max-width: 768px) {
+  .signup-main-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .signup-left {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+
+  .signup-middle-section {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .signup-right {
+    display: none; /* Hide the right section on mobile */
+  }
+
+  .form-content {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .signup-form {
+    width: 100%;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .form-input {
+    width: 100%;
+  }
+
+  .create-account {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .signup-btn {
+    width: 100%;
+  }
+
+  .check-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .checkbox-label {
+    text-align: center;
+  }
+}
+
+/* Add additional breakpoint for very small devices */
+@media screen and (max-width: 480px) {
+  .signup-heading {
+    font-size: 24px;
+  }
+
+  .create-account-heading {
+    font-size: 20px;
+  }
+
+  .form-input {
+    padding: 10px;
+  }
+}
