@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import axios from "axios";
 import styles from "./LinktreeUsername.module.css";
 import logo from "../../assets/LinktreeUsername/logo.png";
 import img from "../../assets/Signup/signup-bcg.png";
+import { API_URL } from "../../utils/config";
 
 const LinktreeUsername = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const [username, setUsername] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [error, setError] = useState("");
   const [usernameError, setUsernameError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -23,7 +28,7 @@ const LinktreeUsername = () => {
     }
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     let hasError = false;
 
     if (!selectedCategory) {
@@ -37,8 +42,32 @@ const LinktreeUsername = () => {
     }
 
     if (!hasError) {
-      // Navigate to link page
-      navigate("/link");
+      try {
+        setIsSubmitting(true);
+        
+        // Create initial link profile with the username
+        await axios.post(
+          `${API_URL}/links`,
+          {
+            profileTitle: username,
+            bio: "",
+            backgroundColor: "#ffffff",
+            links: [],
+            shopLinks: [],
+            socialLinks: {},
+            category: selectedCategory
+          },
+          { withCredentials: true }
+        );
+        
+        // Navigate to link page after successful save
+        navigate("/link");
+      } catch (error) {
+        console.error("Error saving username:", error);
+        setError("Failed to save username. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -64,7 +93,6 @@ const LinktreeUsername = () => {
               }`}
               value={username}
               onChange={handleUsernameChange}
-              required
             />
             {usernameError && (
               <p className={styles.errorMessage}>{usernameError}</p>
@@ -72,49 +100,45 @@ const LinktreeUsername = () => {
           </div>
 
           <div className={styles.categorySection}>
-            <p className={styles.categoryHeading}>
-              Select one category that best describes your Linktree:
-            </p>
-
+            <h3 className={styles.categoryHeading}>
+              What best describes what you do?
+            </h3>
             <div className={styles.categoryGrid}>
               {[
-                { icon: "🏢", name: "Business" },
-                { icon: "🎨", name: "Creative" },
-                { icon: "📚", name: "Education" },
-                { icon: "🎵", name: "Entertainment" },
-                { icon: "💄", name: "Fashion & Beauty" },
-                { icon: "🍔", name: "Food & Beverage" },
-                { icon: "⚖️", name: "Government & Politics" },
-                { icon: "❤️", name: "Health & Wellness" },
-                { icon: "💝", name: "Non-Profit" },
-                { icon: "💕", name: "Other" },
-                { icon: "💻", name: "Tech" },
-                { icon: "✈️", name: "Travel & Tourism" },
+                "Creator",
+                "Business",
+                "Musician",
+                "Designer",
+                "Community",
+                "Writer",
+                "Gamer",
+                "Developer",
               ].map((category) => (
-                <button
-                  key={category.name}
-                  className={`${styles.categoryButton} ${
-                    selectedCategory === category.name ? styles.active : ""
+                <div
+                  key={category}
+                  className={`${styles.categoryItem} ${
+                    selectedCategory === category ? styles.selected : ""
                   }`}
-                  onClick={() => handleCategorySelect(category.name)}
-                  type="button"
+                  onClick={() => handleCategorySelect(category)}
                 >
-                  <span className={styles.icon}>{category.icon}</span>{" "}
-                  {category.name}
-                </button>
+                  {category}
+                </div>
               ))}
             </div>
             {error && <p className={styles.errorMessage}>{error}</p>}
           </div>
 
-          <button className={styles.continueButton} onClick={handleContinue}>
-            Continue
+          <button 
+            className={styles.continueButton} 
+            onClick={handleContinue}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Saving..." : "Continue"}
           </button>
         </div>
       </div>
-
       <div className={styles.imageSection}>
-        <img src={img} alt="Onboarding visual" className={styles.sideImage} />
+        <img src={img} alt="Signup" className={styles.sideImage} />
       </div>
     </div>
   );
