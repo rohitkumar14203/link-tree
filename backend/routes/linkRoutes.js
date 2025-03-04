@@ -50,20 +50,32 @@ router.route("/")
   .get(authenticate, getLinkProfile)
   .post(authenticate, updateLinkProfile);
 
-// Update the upload image route
+// Update the upload image route with better error handling
 router.post('/upload-image', authenticate, upload.single('image'), async (req, res) => {
   try {
+    console.log('Upload request received');
+    console.log('Request file:', req.file);
+    console.log('Request body:', req.body);
+    
     if (!req.file) {
+      console.log('No file in request');
       return res.status(400).json({ message: 'Please upload a file' });
     }
 
-    console.log('File uploaded:', req.file);
+    console.log('File uploaded successfully:', req.file.filename);
 
     // Update user's profile image in the database
     const linkProfile = await Link.findOne({ user: req.user._id });
     if (linkProfile) {
       linkProfile.profileImage = req.file.filename;
       await linkProfile.save();
+      console.log('Profile image updated in database');
+    } else {
+      console.log('Creating new link profile with image');
+      await Link.create({
+        user: req.user._id,
+        profileImage: req.file.filename
+      });
     }
 
     res.json({
