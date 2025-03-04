@@ -22,18 +22,22 @@ export const getAuthToken = () => {
   return null;
 };
 
-// Configure axios defaults
+// Configure axios defaults - update to handle FormData correctly
 export const configureAxios = (axios) => {
   axios.defaults.withCredentials = true;
   
   axios.interceptors.request.use(
     (config) => {
       const token = getAuthToken();
-      config.headers = {
-        ...config.headers,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      };
+      
+      // Don't set Content-Type if it's a FormData object
+      if (!(config.data instanceof FormData)) {
+        config.headers = {
+          ...config.headers,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        };
+      }
       
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;

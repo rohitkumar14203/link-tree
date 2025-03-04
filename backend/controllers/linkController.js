@@ -175,36 +175,43 @@ const getLinkProfile = asyncHandler(async (req, res) => {
 // @route   POST /api/links/upload-image
 // @access  Private
 const uploadProfileImage = asyncHandler(async (req, res) => {
-  if (!req.file) {
-    res.status(400);
-    throw new Error('Please upload a file');
-  }
-
   try {
-    let linkProfile = await Link.findOne({ user: req.user._id });
-
-    if (!linkProfile) {
-      linkProfile = await Link.create({
-        user: req.user._id,
-        profileImage: req.file.filename,
-        profileTitle: "@opopo_08",
-        bio: "Bio",
-        backgroundColor: "#000000"
-      });
-    } else {
-      linkProfile.profileImage = req.file.filename;
-      await linkProfile.save();
+    console.log('Upload request received');
+    console.log('Request file:', req.file);
+    
+    if (!req.file) {
+      console.log('No file in request');
+      return res.status(400).json({ message: 'Please upload a file' });
     }
 
-    res.status(200).json({
-      success: true,
+    console.log('File uploaded successfully:', req.file.filename);
+    
+    // Update user's profile image in the database
+    const linkProfile = await Link.findOne({ user: req.user._id });
+    if (linkProfile) {
+      linkProfile.profileImage = req.file.filename;
+      await linkProfile.save();
+      console.log('Profile image updated in database');
+    } else {
+      // Create a new profile if one doesn't exist
+      await Link.create({
+        user: req.user._id,
+        profileImage: req.file.filename
+      });
+      console.log('New profile created with image');
+    }
+
+    // Return the profile image filename
+    res.json({
+      message: 'File uploaded successfully',
       profileImage: req.file.filename
     });
   } catch (error) {
-    console.error('Server error:', error);
-    res.status(500);
-    throw new Error('Error uploading image');
+    console.error('Upload error:', error);
+    res.status(500).json({
+      message: 'Error uploading file',
+      error: error.message
+    });
   }
 });
-
 export { updateLinkProfile, getLinkProfile, uploadProfileImage };

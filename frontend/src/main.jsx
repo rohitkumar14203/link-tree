@@ -10,9 +10,34 @@ import { configureAxios } from "./utils/config";
 // Configure axios with authentication
 configureAxios(axios);
 
+// Fix the axios interceptor to not override Content-Type for FormData
 axios.interceptors.request.use(
   (config) => {
     console.log("Making request to:", config.url);
+    
+    // Don't set Content-Type if it's a FormData object (multipart/form-data)
+    if (config.data instanceof FormData) {
+      // Let the browser set the Content-Type with boundary
+      const headers = { ...config.headers };
+      delete headers['Content-Type'];
+      config.headers = headers;
+    } else {
+      // For JSON requests, set the Content-Type
+      config.headers = {
+        ...config.headers,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      };
+    }
+    
+    // Add auth token if available
+    const token = localStorage.getItem('user') ? 
+      JSON.parse(localStorage.getItem('user')).token : null;
+    
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
     console.log("Request headers:", JSON.stringify(config.headers));
     console.log("Request method:", config.method);
     console.log("WithCredentials:", config.withCredentials);
