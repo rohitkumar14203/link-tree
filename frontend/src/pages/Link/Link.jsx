@@ -58,10 +58,15 @@ const Link = () => {
   // Handle image upload
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file) {
+      console.log('No file selected');
+      return;
+    }
+
+    console.log('Uploading file:', file.name, 'Type:', file.type);
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append('image', file);
 
     try {
       setLoading(true);
@@ -69,19 +74,24 @@ const Link = () => {
         `${API_URL}/links/upload-image`,
         formData,
         {
-          withCredentials: true,
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${currentUser.token}`
           },
+          withCredentials: true,
         }
       );
 
+      console.log('Upload response:', response.data);
+
       if (response.data.profileImage) {
-        setProfileImage(getProfileImageUrl(response.data.profileImage));
-        setMessage("Image uploaded successfully!");
+        const imageUrl = getProfileImageUrl(response.data.profileImage);
+        setProfileImage(imageUrl);
+        setMessage('Profile image updated successfully');
       }
     } catch (error) {
-      setMessage(error.response?.data?.message || "Error uploading image");
+      console.error('Upload error:', error.response?.data || error.message);
+      setMessage('Failed to upload image. Please try again.');
     } finally {
       setLoading(false);
     }

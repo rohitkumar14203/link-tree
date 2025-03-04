@@ -40,7 +40,7 @@ app.use(
       "Cache-Control",
       "Accept",
     ],
-    exposedHeaders: ["set-cookie"]
+    exposedHeaders: ["set-cookie"],
   })
 );
 
@@ -48,7 +48,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Create uploads directories
+// Ensure uploads directory exists
+import { mkdirSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+// Create uploads directories if they don't exist
 try {
   mkdirSync(uploadsDir, { recursive: true });
   mkdirSync(profilesDir, { recursive: true });
@@ -65,6 +71,9 @@ app.use("/api/analytics", analyticsRoutes); // Fixed: removed duplicate
 
 // Serve uploaded files
 app.use("/uploads", express.static(uploadsDir));
+
+// Serve static files from uploads directory
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Add a simple health check endpoint
 app.get("/health", (req, res) => {

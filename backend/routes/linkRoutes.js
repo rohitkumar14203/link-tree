@@ -15,6 +15,9 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const router = express.Router();
+
+// Configure multer for file upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const uploadPath = path.join(__dirname, '../../uploads/profiles');
@@ -22,7 +25,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    cb(null, 'profile-' + uniqueSuffix + path.extname(file.originalname));
   }
 });
 
@@ -31,7 +34,7 @@ const upload = multer({
   limits: {
     fileSize: 5 * 1024 * 1024 // 5MB limit
   },
-  fileFilter: function (req, file, cb) {
+  fileFilter: (req, file, cb) => {
     const filetypes = /jpeg|jpg|png|gif/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -43,13 +46,38 @@ const upload = multer({
   }
 });
 
-const router = express.Router();
-
 router.route("/")
   .get(authenticate, getLinkProfile)
   .post(authenticate, updateLinkProfile);
 
-router.post('/upload-image', authenticate, upload.single('image'), uploadProfileImage);
+// Update the upload image route
+router.post('/upload-image', authenticate, upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'Please upload a file' });
+    }
+
+    console.log('File uploaded:', req.file);
+
+    // Update user's profile image in the database
+    const linkProfile = await Link.findOne({ user: req.user._id });
+    if (linkProfile) {
+      linkProfile.profileImage = req.file.filename;
+      await linkProfile.save();
+    }
+
+    res.json({
+      message: 'File uploaded successfully',
+      profileImage: req.file.filename
+    });
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({
+      message: 'Error uploading file',
+      error: error.message
+    });
+  }
+});
 
 // New routes for public access and tracking clicks
 router.get('/public/:username', getPublicLinkProfile);
